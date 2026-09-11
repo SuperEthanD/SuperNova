@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<title>Add your Website</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<font color="white">
+<h3>Add your Website</h3>
+
+<h2>Add your Website URL</h2>
+
+<p>Enter your Website URL below, it will help us know about your Website and index it into our database.</p>
+
+<!-- Form of Website Submission -->
+<div class="input-group">
+<input type="url" id="websiteUrl" placeholder="https://example.com">
+<button onclick="submitWebsite()">Add Website</button>
+
+</div>
+
+<!-- Displayed Results -->
+<div class="box">
+        <h3>Search Results / Indexed Sites</h3>
+        <ul id="resultsList"></ul>
+    </div>
+
+    <script>
+        // Load existing websites from LocalStorage or use defaults if empty
+        let websiteIndex = JSON.parse(localStorage.getItem('mySearchIndex')) || [
+            { name: "Google", url: "https://google.com" },
+            { name: "Koder Editor", url: "https://www.koderapp.com" }
+        ];
+
+        // Function to display the list of sites
+        function displaySites(sitesToShow) {
+            const list = document.getElementById('resultsList');
+            list.innerHTML = ''; // Clear old results
+            
+            if(sitesToShow.length === 0) {
+                list.innerHTML = '<li>No websites found matching your search.</li>';
+                return;
+            }
+
+            sitesToShow.forEach(site => {
+                const li = document.createElement('li');
+                li.innerHTML = `<a href="${site.url}" target="_blank">${site.name}</a> <br> <small>${site.url}</small>`;
+                list.appendChild(li);
+            });
+        }
+
+        // Function to search through the saved websites
+        function searchWebsites() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filteredSites = websiteIndex.filter(site => 
+                site.name.toLowerCase().includes(query) || 
+                site.url.toLowerCase().includes(query)
+            );
+            displaySites(filteredSites);
+        }
+
+        // Function to add a website dynamically
+        function addWebsite() {
+            const nameInput = document.getElementById('siteName');
+            const urlInput = document.getElementById('siteUrl');
+
+            if (!nameInput.value || !urlInput.value) {
+                alert('Please fill out both the Name and URL fields.');
+                return;
+            }
+
+            // Ensure the URL starts with http:// or https://
+            let url = urlInput.value;
+            if (!/^https?:\/\//i.test(url)) {
+                url = 'https://' + url;
+            }
+
+            // Add the new site object to our array
+            const newSite = { name: nameInput.value, url: url };
+            websiteIndex.push(newSite);
+
+            // Save updated array to browser storage
+            localStorage.setItem('mySearchIndex', JSON.stringify(websiteIndex));
+
+            // Clear inputs and refresh view
+            nameInput.value = '';
+            urlInput.value = '';
+            displaySites(websiteIndex);
+            alert('Website added successfully!');
+        }
+
+        // Show all indexed sites by default when the app opens
+        displaySites(websiteIndex);
+    </script>
+
+</body>
+</html>
+
+</body>
+</html>
+
+
+<!-- Back Button -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+body {
+margin: 0;
+padding: 0;
+height: 100vh;
+background-color: #f4f4f4;
+font-family: sans-serif;
+
+}
+
+
+.button-container {
+position: fixed; 
+bottom: 20px;
+right: 20px;
+display: flex;
+gap: 10px;
+z-index: 1000;
+
+}
+
+
+.button-container button {
+padding: 10px 15px;
+font-size: 16px;
+border: none;
+border-radius: 5px;
+background-color: #007bff;
+color: white;
+cursor: pointer;
+transition: background-color 0.2s;
+
+}
+
+.button-container button:hover {
+background-color: #0056b3;
+
+}
+
+</style>
+</head>
+</html>
+
+<div class="button-container">
+<a href="Search.html">
+<button>Back</button>
+
+<!-- Background -->
+<style>
+
+body {
+
+margin: 0; 
+padding: 0;
+background-image: url('Add-Your-Website_Background.jpg');
+background-size: cover;
+background-repeat: no-repeat;
+background-position: center;
+height: 100vh;
+
+}
+
+</style>
