@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Review Widget</title>
+    <style>
+        /* Widget Wrapper */
+        .review-widget {
+            max-width: 500px;
+            margin: 30px auto;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            border: 1px solid #e1e4e6;
+            border-radius: 12px;
+            padding: 24px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .widget-title {
+            margin-top: 0;
+            color: #1a1d20;
+            font-size: 20px;
+        }
+
+        /* Form Styling */
+        .review-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .input-field, .textarea-field {
+            padding: 10px 14px;
+            border: 1px solid #ccd1d6;
+            border-radius: 6px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .input-field:focus, .textarea-field:focus {
+            border-color: #007aff;
+        }
+
+        .textarea-field {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        /* Rating Stars Container */
+        .star-rating {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+            gap: 4px;
+        }
+
+        .star-rating input {
+            display: none;
+        }
+
+        .star-rating label {
+            font-size: 28px;
+            color: #ccd1d6;
+            cursor: pointer;
+            transition: color 0.1s;
+        }
+
+        .star-rating input:checked ~ label,
+        .star-rating label:hover,
+        .star-rating label:hover ~ label {
+            color: #ffcc00;
+        }
+
+        .submit-btn {
+            background-color: #007aff;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Reviews List Container */
+        .reviews-list {
+            border-top: 1px solid #e1e4e6;
+            padding-top: 16px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .review-card {
+            background-color: #f8f9fa;
+            padding: 14px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .reviewer-name {
+            font-weight: 600;
+            color: #343a40;
+            font-size: 14px;
+        }
+
+        .review-stars {
+            color: #ffcc00;
+            font-size: 14px;
+        }
+
+        .review-text {
+            margin: 0;
+            color: #495057;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="review-widget">
+        <h3 class="widget-title">User Reviews</h3>
+        
+        <!-- Review Submission Form -->
+        <form class="review-form" id="reviewForm">
+            <input type="text" id="reviewerName" class="input-field" placeholder="Your Name" required>
+            
+            <!-- 5-Star Selection -->
+            <div class="star-rating">
+                <input type="radio" id="star5" name="rating" value="5" required><label for="star5">★</label>
+                <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
+                <input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label>
+                <input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label>
+                <input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label>
+            </div>
+
+            <textarea id="reviewComment" class="textarea-field" placeholder="Share your experience..." required></textarea>
+            <button type="submit" class="submit-btn">Submit Review</button>
+        </form>
+
+        <!-- Displaying Live Feed -->
+        <div class="reviews-list" id="reviewsList">
+            <!-- Dynamic reviews insert here -->
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('reviewForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Extract form values
+            const name = document.getElementById('reviewerName').value;
+            const comment = document.getElementById('reviewComment').value;
+            const rating = document.querySelector('input[name="rating"]:checked').value;
+
+            const newReview = { name, comment, rating: parseInt(rating) };
+
+            // Save review to local storage arrays
+            let savedReviews = JSON.parse(localStorage.getItem('webReviews')) || [];
+            savedReviews.unshift(newReview); // Put newest reviews on top
+            localStorage.setItem('webReviews', JSON.stringify(savedReviews));
+
+            // Refresh UI list and reset fields
+            renderReviews();
+            document.getElementById('reviewForm').reset();
+        });
+
+        function renderReviews() {
+            const listContainer = document.getElementById('reviewsList');
+            const savedReviews = JSON.parse(localStorage.getItem('webReviews')) || [];
+            
+            if (savedReviews.length === 0) {
+                listContainer.innerHTML = '<p style="color:#868e96; font-size:14px; text-align:center;">No reviews yet. Be the first!</p>';
+                return;
+            }
+
+            listContainer.innerHTML = savedReviews.map(review => `
+                <div class="review-card">
+                    <div class="review-header">
+                        <span class="reviewer-name">${escapeHTML(review.name)}</span>
+                        <span class="review-stars">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</span>
+                    </div>
+                    <p class="review-text">${escapeHTML(review.comment)}</p>
+                </div>
+            `).join('');
+        }
+
+        // Simple helper to safely handle text input inputs against script injections
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g, 
+                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+            );
+        }
+
+        // Initialize display on app refresh
+        renderReviews();
+    </script>
+</body>
+</style>
+
+<!-- Back Button -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+body {
+margin: 0;
+padding: 0;
+height: 100vh;
+background-color: #f4f4f4;
+font-family: sans-serif;
+
+}
+
+.button-container {
+position: fixed;
+bottom: 20px;
+right: 20px;
+display: flex;
+gap: 10px;
+z-index: 1000;
+
+}
+
+.button-container button {
+padding: 10px 15px;
+font-size: 16px;
+border: none;
+border-raidus: 5px;
+background-color: #007bff;
+color: white;
+cursor: pointer;
+transition: background-color 0.2s;
+
+}
+
+.button-container button:hover {
+background-color: #0056b3;
+
+}
+
+</style>
+</head>
+</html>
+
+<div class="button-container">
+<a href="Settings.html">
+<button>Back</button>
+
+<body style="background-color: DarkBlue;">
