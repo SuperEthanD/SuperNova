@@ -1,64 +1,75 @@
 <!DOCTYPE html>
-<html>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
-<style>
-
-.rectangular-search {
-border-radius: 0px;
-border: 2px solid #333333;
-padding: 10px 15px;
-font-size: 16px;
-width: 300px;
-outline: none;
-
-}
-
-/* Optional: Style when clicking inside */
-.rectangular-search:focus {
-border-color: #007BFF;
-
-}
-
-</style>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f9f9f9;
+        }
+        .search-container {
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result-item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border-left: 5px solid #007BFF;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .result-item h3 {
+            margin: 0 0 5px 0;
+        }
+        .result-item a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+        .no-results {
+            color: #666;
+            font-style: italic;
+        }
+    </style>
 </head>
 <body>
 
-<div class="body">
+    <h2 style="font-family: 'Trebuchet MS', sans-serif; color: white;">Travel the Galaxy!</h2>
+    
+    <!-- Search Input and Button -->
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Type your search here...">
+        <button id="searchButton">Go!</button>
+    </div>
 
-<h2 style="font-family: 'Trebuchet MS', sans-serif; color: white;">Travel the Galaxy!</h2>
-
-<!-- Search Bar -->
-<div class="search-container">
-<div><input type="text" class="rectangular-search" placeholder="Search Anything">
-
-<style>
-        .rectangular-searchButton {
-            /* Removes rounded corners */
-            border-radius: 0px; 
-            border: 2px solid #333333; 
-            padding: 12px 15px;
-            font-size: 15px; 
-            color: white;
-            width: 60px; 
-            outline: none;
-            background-color: #007BFF
-        }
-        .rectangular-search:focus {
-            border-color: #007BFF; 
-        }
-    </style>
-            <button class="rectangular-searchButton">Go!</i> </button></div>
-
-<!-- Container where results will appear -->
-  <div id="searchResults"></div>
+    <!-- Container where results will appear -->
+    <div id="searchResults"></div>
 
     <script>
         // 1. Your website content database (Array of Objects)
         const websiteData = [
-            { title: "About Us", content: "Learn more about our company history, mission, and team members.", url: "about.html" },
+            { title: "The Angry English Guy", content: "Welcome to my Website!", url: "https://theangryenglishguy.blog" },
             { title: "Our Services", content: "We offer web design, mobile app development, and SEO optimization services.", url: "services.html" },
             { title: "Contact Info", content: "Get in touch with us via email, phone, or visit our office headquarters.", url: "contact.html" },
             { title: "JavaScript Tutorial", content: "Learn how to code JavaScript from scratch with simple examples.", url: "js-tutorial.html" },
@@ -119,12 +130,6 @@ border-color: #007BFF;
 
 </body>
 
-
-</form>
-</form>
-<html>
-<head> 
-
 <!-- Back Button -->
 <html lang="en">
 <head>
@@ -141,7 +146,7 @@ font-family: sans-serif;
 
 
 .button-container {
-position: fixed; 
+position: fixed;
 bottom: 20px;
 right: 20px;
 display: flex;
@@ -152,8 +157,8 @@ z-index: 1000;
 
 
 .button-container button {
-padding: 10px 15px;
-font-size: 16px;
+padding: 15px 10px;
+font size: 16px;
 border: none;
 border-radius: 5px;
 background-color: #007bff;
@@ -164,7 +169,7 @@ transition: background-color 0.2s;
 }
 
 
-.button-container button:hover {
+.button container button:hover {
 background-color: #0056b3;
 
 }
@@ -176,7 +181,6 @@ background-color: #0056b3;
 <div class="button-container">
 <a href="Home.html">
 <button>Back</button>
-
 
 <!-- Background -->
 <style>
