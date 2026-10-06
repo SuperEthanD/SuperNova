@@ -76,23 +76,23 @@
     <script>
         // 1. Your website content database (Array of Objects)
         const websiteData = [
-            { title: "The Angry English Guy", content: "Welcome to my Website!", url: "https://theangryenglishguy.blog" },
-            { title: "GOG.com", content: "Download the best classic and new games on Windows, Mac & Linux. A vast selection of titles, DRM-free, with free goodies and 30-day money-back guarantee.", url: "https://www.gog.com" },
-            { title: "The Ident Gallery", content: "Preserving British television presentation since 2007", url: "https://theident.gallery" },
-            { title: "BingeBrowse (formerly BingeBuster)", content: "Your Video Store", url: "https://bingebrowse.net" },
-            { title: "TVARK", content: "The Television Museum", url: "https://tvark.org" },
-            { title: "Internet Archive", content: "Search the history of more than 1 trillion web pages on the Internet.", url: "https://archive.org" },
-            { title: "FreeCodeCamp", content: "Build Your Skills for Free.", url: "https://www.freecodecamp.org"},
-            { title: "Change.org", content: "Change starts here", url: "https://www.change.org"},
-            { title: "Audiovisual Identity Database", content: "The Motion Graphics Museum", url: "https://www.avid.wiki"},
-            { title: "Neocities", content: "Create your own free website. Unlimited creativity, zero ads.", url: "https://neocities.org"},
-            { title: "Canva: Visual Suite for Everyone", content: "Canva is a free-to-use online graphic design tool. Use it to create social media posts, presentations, posters, videos, logos and more.", url: "https://www.canva.com"},
-            { title: "Time and Date", content: "Welcome to the world's top site for time, time zones, and astronomy. Organize your life with free online info and tools you can rely on. No sign-up needed.", url: "https://www.timeanddate.com"},
-            { title: "Omni Calculator", content: "Turning Reality into Calculators.", url: "https://www.omnicalculator.com"},
-            { title: "Atlas Obscura: Curious and Wondrous Travel Destinations", content: "Explore the world's most unique travel destinations and curious places with maps, guides, and advice collected by our editors and community since 2009.", url: "https://www.atlasobscura.com"},
-            { title: "Maths is Fun", content: "Math explained in easy language, plus puzzles, games, worksheets and an illustrated dictionary. For K-12 kids, teachers and parents.", url: "https://www.mathsisfun.com"},
-            { title: "SuperCook - Zero Waste Recipe Generator", content: "Supercook is a recipe search engine that lets you search by ingredients you have at home. Find thousands of recipes you can make right now", url: "https://www.supercook.com"},
-            { title: "Instructables", content: "Instructables is a community for people who like to make things. Come explore, share, and make your next project with us!", url: "https://www.instructables.com"}
+            { type: "website", title: "The Angry English Guy", content: "Welcome to my Website!", url: "https://theangryenglishguy.blog" },
+            { type: "website", title: "GOG.com", content: "Download the best classic and new games on Windows, Mac & Linux. A vast selection of titles, DRM-free, with free goodies and 30-day money-back guarantee.", url: "https://www.gog.com" },
+            { type: "website", title: "The Ident Gallery", content: "Preserving British television presentation since 2007", url: "https://theident.gallery" },
+            { type: "website", title: "BingeBrowse (formerly BingeBuster)", content: "Your Video Store", url: "https://bingebrowse.net" },
+            { type: "website", title: "TVARK", content: "The Television Museum", url: "https://tvark.org" },
+            { type: "website", title: "Internet Archive", content: "Search the history of more than 1 trillion web pages on the Internet.", url: "https://archive.org" },
+            { type: "website", title: "FreeCodeCamp", content: "Build Your Skills for Free.", url: "https://www.freecodecamp.org"},
+            { type: "website", title: "Change.org", content: "Change starts here", url: "https://www.change.org"},
+            { type: "website", title: "Audiovisual Identity Database", content: "The Motion Graphics Museum", url: "https://www.avid.wiki"},
+            { type: "website", title: "Neocities", content: "Create your own free website. Unlimited creativity, zero ads.", url: "https://neocities.org"},
+            { type: "website", title: "Canva: Visual Suite for Everyone", content: "Canva is a free-to-use online graphic design tool. Use it to create social media posts, presentations, posters, videos, logos and more.", url: "https://www.canva.com"},
+            { type: "website", title: "Time and Date", content: "Welcome to the world's top site for time, time zones, and astronomy. Organize your life with free online info and tools you can rely on. No sign-up needed.", url: "https://www.timeanddate.com"},
+            { type: "website", title: "Omni Calculator", content: "Turning Reality into Calculators.", url: "https://www.omnicalculator.com"},
+            { type: "website", title: "Atlas Obscura: Curious and Wondrous Travel Destinations", content: "Explore the world's most unique travel destinations and curious places with maps, guides, and advice collected by our editors and community since 2009.", url: "https://www.atlasobscura.com"},
+            { type: "website", title: "Maths is Fun", content: "Math explained in easy language, plus puzzles, games, worksheets and an illustrated dictionary. For K-12 kids, teachers and parents.", url: "https://www.mathsisfun.com"},
+            { type: "website", title: "SuperCook - Zero Waste Recipe Generator", content: "Supercook is a recipe search engine that lets you search by ingredients you have at home. Find thousands of recipes you can make right now", url: "https://www.supercook.com"},
+            { type: "website", title: "Instructables", content: "Instructables is a community for people who like to make things. Come explore, share, and make your next project with us!", url: "https://www.instructables.com"}
         ];
 
         // 2. Grab HTML elements
