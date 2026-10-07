@@ -3,16 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search</title>
+    <title>Search Portal</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 40px;
             background-color: #f9f9f9;
+            padding-bottom: 80px; /* Space for the fixed back button */
         }
+        
+        h2 {
+            font-family: 'Trebuchet MS', sans-serif; 
+            color: #333; /* Fixed title color so it's readable on light background */
+        }
+
         .search-container {
             margin-bottom: 20px;
         }
+        
         input[type="text"] {
             padding: 10px;
             width: 300px;
@@ -20,6 +28,7 @@
             border: 1px solid #ccc;
             border-radius: 4px;
         }
+        
         button {
             padding: 10px 20px;
             font-size: 16px;
@@ -29,9 +38,41 @@
             border-radius: 4px;
             cursor: pointer;
         }
+        
         button:hover {
             background-color: #0056b3;
         }
+
+        /* Navigation Bar Tabs */
+        .navbar { 
+            display: flex; 
+            gap: 10px; 
+            margin-bottom: 20px;
+            border-bottom: 20px solid transparent;
+        }
+
+        .nav-item {
+            background: #e9e9e9;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            color: #333;
+            transition: all 0.2s;
+        }
+
+        .nav-item:hover {
+            background: #ddd;
+        }
+
+        .nav-item.active {
+            background-color: #007BFF;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Results Containers */
         .result-item {
             background: white;
             padding: 15px;
@@ -40,22 +81,51 @@
             border-left: 5px solid #007BFF;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
+        
         .result-item h3 {
             margin: 0 0 5px 0;
         }
+        
         .result-item a {
             color: #007BFF;
             text-decoration: none;
         }
+
+        /* Media styling overrides */
+        .media-preview {
+            max-width: 100%;
+            height: auto;
+            max-height: 200px;
+            display: block;
+            margin-top: 10px;
+            border-radius: 4px;
+            background: #eee;
+        }
+        
         .no-results {
             color: #666;
             font-style: italic;
+        }
+
+        /* Fixed Navigation / Control Buttons Container */
+        .button-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .button-container button {
+            padding: 15px 20px;
+            border-radius: 5px;
         }
     </style>
 </head>
 <body>
 
-    <h2 style="font-family: 'Trebuchet MS', sans-serif; color: white;">Travel the Galaxy!</h2>
+    <h2>Travel the Galaxy!</h2>
     
     <!-- Search Input and Button -->
     <div class="search-container">
@@ -64,7 +134,7 @@
     </div>
 
     <!-- Navigation Tabs -->
-    <nav class="navbar">
+    <nav class="navbar" id="navbarTabs">
       <button class="nav-item active" data-type="website">Websites</button>
       <button class="nav-item" data-type="image">Images</button>
       <button class="nav-item" data-type="video">Videos</button>
@@ -73,11 +143,17 @@
     <!-- Container where results will appear -->
     <div id="searchResults"></div>
 
+    <!-- Floating Utility Buttons -->
+    <div class="button-container">
+        <button onclick="window.history.back()">← Back</button>
+    </div>
+
     <script>
-        // 1. Your website content database (Array of Objects)
-        const websiteData = [
+        // 1. Updated Database Array with Web, Image, and Video types
+        const searchDatabase = [
+            // Websites
             { type: "website", title: "The Angry English Guy", content: "Welcome to my Website!", url: "https://theangryenglishguy.blog" },
-            { type: "website", title: "GOG.com", content: "Download the best classic and new games on Windows, Mac & Linux. A vast selection of titles, DRM-free, with free goodies and 30-day money-back guarantee.", url: "https://www.gog.com" },
+            { type: "website", title: "GOG.com", content: "Download the best classic and new games on Windows, Mac & Linux. A vast selection of titles, DRM-free.", url: "https://www.gog.com" },
             { type: "website", title: "The Ident Gallery", content: "Preserving British television presentation since 2007", url: "https://theident.gallery" },
             { type: "website", title: "BingeBrowse (formerly BingeBuster)", content: "Your Video Store", url: "https://bingebrowse.net" },
             { type: "website", title: "TVARK", content: "The Television Museum", url: "https://tvark.org" },
@@ -86,233 +162,60 @@
             { type: "website", title: "Change.org", content: "Change starts here", url: "https://www.change.org"},
             { type: "website", title: "Audiovisual Identity Database", content: "The Motion Graphics Museum", url: "https://www.avid.wiki"},
             { type: "website", title: "Neocities", content: "Create your own free website. Unlimited creativity, zero ads.", url: "https://neocities.org"},
-            { type: "website", title: "Canva: Visual Suite for Everyone", content: "Canva is a free-to-use online graphic design tool. Use it to create social media posts, presentations, posters, videos, logos and more.", url: "https://www.canva.com"},
-            { type: "website", title: "Time and Date", content: "Welcome to the world's top site for time, time zones, and astronomy. Organize your life with free online info and tools you can rely on. No sign-up needed.", url: "https://www.timeanddate.com"},
+            { type: "website", title: "Canva: Visual Suite for Everyone", content: "Canva is a free-to-use online graphic design tool.", url: "https://www.canva.com"},
+            { type: "website", title: "Time and Date", content: "Welcome to the world's top site for time, time zones, and astronomy.", url: "https://www.timeanddate.com"},
             { type: "website", title: "Omni Calculator", content: "Turning Reality into Calculators.", url: "https://www.omnicalculator.com"},
-            { type: "website", title: "Atlas Obscura: Curious and Wondrous Travel Destinations", content: "Explore the world's most unique travel destinations and curious places with maps, guides, and advice collected by our editors and community since 2009.", url: "https://www.atlasobscura.com"},
-            { type: "website", title: "Maths is Fun", content: "Math explained in easy language, plus puzzles, games, worksheets and an illustrated dictionary. For K-12 kids, teachers and parents.", url: "https://www.mathsisfun.com"},
-            { type: "website", title: "SuperCook - Zero Waste Recipe Generator", content: "Supercook is a recipe search engine that lets you search by ingredients you have at home. Find thousands of recipes you can make right now", url: "https://www.supercook.com"},
-            { type: "website", title: "Instructables", content: "Instructables is a community for people who like to make things. Come explore, share, and make your next project with us!", url: "https://www.instructables.com"}
+            { type: "website", title: "Atlas Obscura: Curious Destinations", content: "Explore the world's most unique travel destinations and curious places.", url: "https://www.atlasobscura.com"},
+            { type: "website", title: "Maths is Fun", content: "Math explained in easy language, plus puzzles, games, worksheets.", url: "https://www.mathsisfun.com"},
+            { type: "website", title: "SuperCook - Zero Waste Recipe Generator", content: "Supercook is a recipe search engine that lets you search by ingredients.", url: "https://www.supercook.com"},
+            { type: "website", title: "Instructables", content: "Instructables is a community for people who like to make things.", url: "https://www.instructables.com"},
+            
+            // Images
+            { type: "image", title: "Milky Way Galaxy Core", content: "A high-resolution long exposure image of our stellar cluster.", url: "https://unsplash.com", mediaUrl: "https://unsplash.com" },
+            { type: "image", title: "Retro Video Store Aisle", content: "Classic VHS shelves from the late 90s nostalgia layout.", url: "https://unsplash.com", mediaUrl: "https://unsplash.com" },
+            { type: "image", title: "Vintage British Television set", content: "An old retro wooden CRT box TV showcasing classic system broadcast arrays.", url: "https://unsplash.com", mediaUrl: "https://unsplash.com" },
+            
+            // Videos
+            { type: "video", title: "Deep Space Nebula Travel Simulation", content: "Fly through colorful synthetic gas structures in deep cosmic arenas.", url: "https://w3schools.com", mediaUrl: "https://w3schools.com" },
+            { type: "video", title: "Classic TV Broadcast Noise & Static loop", content: "Old retro channel switching presentation mockup video file.", url: "https://w3schools.com", mediaUrl: "https://w3schools.com" }
         ];
 
         // 2. Grab HTML elements
         const searchInput = document.getElementById('searchInput');
         const searchButton = document.getElementById('searchButton');
         const searchResults = document.getElementById('searchResults');
+        const navItems = document.querySelectorAll('.nav-item');
 
-        // 3. Define the search function
+        // Global Variable to keep track of active database media mode filter
+        let currentSearchType = 'website';
+
+        // 3. Handle Nav Link Tab Switching Mechanics
+        navItems.forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                // Remove active styling flag rules from all tabs
+                navItems.forEach(btn => btn.classList.remove('active'));
+                
+                // Add active look to the targeted button element clicked
+                tab.classList.add('active');
+                
+                // Read out data attribute data-type value (website, image, or video)
+                currentSearchType = tab.getAttribute('data-type');
+                
+                // Run/Refresh lookups automatically if a user is actively clicking filters
+                if (searchInput.value.trim() !== '') {
+                    performSearch();
+                }
+            });
+        });
+
+        // 4. Enhanced Search Filtering and Layout Routing Logic
         function performSearch() {
-            // Get user input and convert to lowercase for case-insensitive matching
             const query = searchInput.value.toLowerCase().trim();
-            
-            // Clear previous results
             searchResults.innerHTML = '';
 
-            // If input is empty, don't search
             if (query === '') {
                 searchResults.innerHTML = '<p class="no-results">Please enter a search term.</p>';
                 return;
             }
 
-            // Filter data matching title or content
-            const filteredResults = websiteData.filter(item => {
-                return item.title.toLowerCase().includes(query) || 
-                       item.content.toLowerCase().includes(query);
-            });
-
-            // Display results
-            if (filteredResults.length === 0) {
-                searchResults.innerHTML = '<p class="no-results">No results found matching your query.</p>';
-            } else {
-                filteredResults.forEach(item => {
-                    const resultDiv = document.createElement('div');
-                    resultDiv.classList.add('result-item');
-                    resultDiv.innerHTML = `
-                        <h3><a href="${item.url}">${item.title}</a></h3>
-                        <p>${item.content}</p>
-                    `;
-                    searchResults.appendChild(resultDiv);
-                });
-            }
-        }
-
-        // 4. Trigger search on button click
-        searchButton.addEventListener('click', performSearch);
-
-        // Optional: Trigger search when user presses "Enter" key inside the input field
-        searchInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                performSearch();
-            }
-        });
-    </script>
-
-</body>
-
-<!-- Back Button -->
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<style>
-body {
-margin: 0;
-padding: 0;
-height: 100vh;
-background-color: #f4f4f4;
-font-family: sans-serif;
-
-}
-
-
-.button-container {
-position: fixed;
-bottom: 20px;
-right: 20px;
-display: flex;
-gap: 10px;
-z-index: 1000;
-
-}
-
-
-.button-container button {
-padding: 15px 10px;
-font size: 16px;
-border: none;
-border-radius: 5px;
-background-color: #007bff;
-color: white;
-cursor: pointer;
-transition: background-color 0.2s;
-
-}
-
-
-.button container button:hover {
-background-color: #0056b3;
-
-}
-
-/* Navigation Bar */
-.navbar { 
-display: flex; 
-gap: 20px; 
-
-}
-
-.nav-item {
-background: none;
-border: none;
-padding: 10px 4px;
-font-size: 14px;
-color: #5f6368;
-cursor: pointer;
-position: relative;
-
-}
-
-.nav-item.active {
-color: #1a73e8;
-font-weight: bold;
-
-}
-
-.nav-item.active::after {
-content: '';
-position: absolute;
-bottom: 0;
-left: 0;
-width: 100%;
-height: 3px;
-background-color: #1a73e8;
-
-}
-
-/* Results Formatting */
-.results-container {
-  max-width: 800px;
-  margin: 20px auto;
-  padding: 0 20px;
-}
-
-.status-message {
-  color: #70757a;
-  text-align: center;
-  margin-top: 40px;
-}
-
-/* Specific styling depending on Result Class */
-.result-card.website {
-  margin-bottom: 25px;
-}
-
-.result-card.website a {
-  color: #1a0dab;
-  font-size: 20px;
-  text-decoration: none;
-}
-
-.result-card.website a:hover {
-  text-decoration: underline;
-}
-
-.result-card.website p {
-  font-size: 14px;
-  color: #4d5156;
-  margin-top: 5px;
-}
-
-/* Image & Video Grid Integration */
-.grid-layout {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 16px;
-}
-
-.result-card.image img, .result-card.video .video-thumb {
-  width: 100%;
-  height: 150px;
-  object-fit: cover;
-  border-radius: 8px;
-  border: 1px solid #dadce0;
-}
-
-.result-card.video {
-  position: relative;
-}
-
-.video-duration {
-  position: absolute;
-  bottom: 25px;
-  right: 8px;
-  background: rgba(0,0,0,0.8);
-  color: white;
-  font-size: 12px;
-  padding: 2px 4px;
-  border-radius: 4px;
-}
-
-</style>
-</head>
-</html>
-
-<div class="button-container">
-<a href="Home.html">
-<button>Back</button>
-
-<!-- Background -->
-<style>
-
-body {
-
-margin: 0; 
-padding: 0;
-background-image: url('Supernova_Browser-Background.jpg');
-background-size: cover; 
-background-repeat: no-repeat; 
-background-position: center;
-height: 100vh;
-
-</style>
-
-<body background='Supernove_Browser-Background.jpg'>
+            // Filter items matching query AND the current category type selected in navbar
