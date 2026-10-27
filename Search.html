@@ -193,7 +193,8 @@
         { title: "Atlas Obscura: Curious Destinations", content: "Explore the world's most unique travel destinations and curious places.", url: "https://atlasobscura.com"},
         { title: "Maths is Fun", content: "Math explained in easy language, plus puzzles, games, worksheets.", url: "https://www.mathsisfun.com"},
         { title: "SuperCook - Zero Waste Recipe Generator", content: "Supercook is a recipe search engine that lets you search by ingredients.", url: "https://www.supercook.com"},
-        { title: "Instructables", content: "Instructables is a community for people who like to make things.", url: "https://www.instructables.com"}
+        { title: "Instructables", content: "Instructables is a community for people who like to make things.", url: "https://www.instructables.com"},
+        { title: "Terraink: Free Map Poster and Wallpaper Creator", content: "Free online map poster and wallpaper generator. Design custom, print-ready map art for any city or location — export as PNG, PDF, or SVG.", url: "https://terraink.app"}
     ];
 
     const imageData = [
@@ -206,7 +207,7 @@
     ];
 
     const videoData = [
-        { title: "Journey to the Edge of the Universe", duration: "1:24:00", url: "https://youtube.com", thumb: "https://unsplash.com" },
+        { title: "nobody here", duration: "2:05", url: "https://youtu.be/-RFunvF0mDw?si=qHWT-rqywMdgShdC", thumb: "https://www.youtube.com/watch?v=-RFunvF0mDw" },
         { title: "How Supernovas Form", duration: "12:45", url: "https://youtube.com", thumb: "https://unsplash.com" },
         { title: "Black Holes Explained", duration: "18:20", url: "https://youtube.com", thumb: "https://unsplash.com" }
     ];
@@ -231,11 +232,38 @@
         });
     });
 
-    // 4. Handle button click and 'Enter' key press down
-    searchButton.addEventListener('click', performSearch);
-    searchInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') performSearch();
-    });
+    // 4. Define the search and rendering mechanics
+function performSearch() {
+    const query = searchInput.value.toLowerCase().trim();
+    searchResults.innerHTML = '';
+
+    // NEW CHECK: If the search box is completely empty, stop right here and show nothing
+    if (query === '') {
+        return; 
+    }
+
+    // Execute filtering based on the active structural view
+    if (currentMode === 'websites') {
+        // Updated logic: Only filters database items matching the input text
+        const filtered = websiteData.filter(item => 
+            item.title.toLowerCase().includes(query) || item.content.toLowerCase().includes(query)
+        );
+        renderWebsites(filtered);
+
+    } else if (currentMode === 'images') {
+        const filtered = imageData.filter(item => 
+            item.title.toLowerCase().includes(query)
+        );
+        renderImages(filtered);
+
+    } else if (currentMode === 'videos') {
+        const filtered = videoData.filter(item => 
+            item.title.toLowerCase().includes(query)
+        );
+        renderVideos(filtered);
+    }
+}
+
 
     // 5. Render engine that builds working links
     function performSearch() {
@@ -302,7 +330,8 @@
     }
 
     // Run empty filter on load so initial list displays immediately
-    performSearch();
+    // performSearch();
+    searchInput.addEventListener('input', performSearch);
  </script>
 
 <!-- Back Button -->
