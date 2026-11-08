@@ -380,14 +380,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const logoReturn = document.getElementById('logo-return');
     const urlInput = document.getElementById('url-input');
 
-    // Database of mock planetary data matching the SuperNova search concept
+        // Database of mock planetary and user-provided live web data
     const mockDatabase = [
-        { title: "Andromeda Galaxy - Astronomy Guide", url: "https://spacefact.org", snippet: "Explore coordinates, planetary structures, and recent exploration telescope imagery of our closest galactic neighbor." },
-        { title: "How to Build Rocket Propulsion Engines", url: "https://star-drive.net", snippet: "A technical guide covering chemical reactions, ion thusters, and structural system configurations for modern spaceships." },
-        { title: "Space Exploration News & Mission Updates", url: "https://cosmictimes.com", snippet: "Breaking discoveries from remote rovers across the Martian landscape, outer asteroids, and deep space telemetry feeds." },
-        { title: "Supernova Explorations: The Lifespan of Stars", url: "https://astrophysics.edu", snippet: "An analytical breakdown detailing stellar collapse occurrences, high-energy nebula formation, and cosmic dust clouds." },
-        { title: "Coding Web Browsers using Simple Javascript Applications", url: "https://koderdev.io", snippet: "Learn core procedures to build state-switching views, address inputs, and layout viewports within local editors." }
+        { 
+            title: "The Angry English Guy – Nostalgia & Digital Culture Blog", 
+            url: "https://theangryenglishguy.blog", 
+            snippet: "Welcome to the central platform of Ethan D (The Angry English Guy). Exploring media compilations, 2009 Cartoon Network montages, and vintage E4 British TV ident histories." 
+        },
+        { 
+            title: "BingeBrowse — Your Streaming Services as a 3D Video Store", 
+            url: "https://bingebrowse.net", 
+            snippet: "Step inside an interactive 3D rental store environment using WebGL. Seamlessly browse movies, sync watchlists, and organize your Plex, Jellyfin, or Emby streaming catalogs." 
+        },
+        { 
+            title: "Andromeda Galaxy - Astronomy Guide", 
+            url: "https://spacefact.org", 
+            snippet: "Explore coordinates, planetary structures, and recent exploration telescope imagery of our closest galactic neighbor." 
+        },
+        { 
+            title: "How to Build Rocket Propulsion Engines", 
+            url: "https://star-drive.net", 
+            snippet: "A technical guide covering chemical reactions, ion thrusters, and structural system configurations for modern spaceships." 
+        },
+        { 
+            title: "Space Exploration News & Mission Updates", 
+            url: "https://cosmictimes.com", 
+            snippet: "Breaking discoveries from remote rovers across the Martian landscape, outer asteroids, and deep space telemetry feeds." 
+        }
     ];
+
 
     // Function to run search actions
     function executeSearch(query) {
