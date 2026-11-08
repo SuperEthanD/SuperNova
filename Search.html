@@ -3,384 +3,459 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Supernova Browser</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0; 
-            padding: 40px;
-            background-image: url('Supernova_Browser-Background.jpg');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-attachment: fixed;
-            min-height: 100vh;
-            box-sizing: border-box;
-        }
-        .search-container {
-            margin-bottom: 20px;
-            display: flex;
-            gap: 10px;
-        }
-        input[type="text"] {
-            padding: 10px;
-            width: 300px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        
-        /* Navigation Bar Styles */
-        .nav-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
-            padding-bottom: 8px;
-            max-width: 435px;
-        }
-        .tab-button {
-            background: none;
-            border: none;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 16px;
-            font-weight: bold;
-            padding: 6px 12px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border-radius: 4px 4px 0 0;
-        }
-        .tab-button:hover {
-            color: #fff;
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-        .tab-button.active {
-            color: #007BFF;
-            background-color: white;
-            border-bottom: 3px solid #007BFF;
-        }
-
-        /* Results Display Layouts */
-        #searchResults {
-            max-width: 800px;
-        }
-        .result-item {
-            background: white;
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 4px;
-            border-left: 5px solid #007BFF;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .result-item h3 {
-            margin: 0 0 5px 0;
-        }
-        .result-item a {
-            color: #007BFF;
-            text-decoration: none;
-        }
-        .no-results {
-            color: #fff;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
-            font-style: italic;
-        }
-
-        /* Image Grid Layout */
-        .image-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 20px;
-            border-radius: 4px;
-        }
-        .image-card {
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            overflow: hidden;
-            background: #fff;
-        }
-        .image-card img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            display: block;
-        }
-        .image-card p {
-            padding: 8px;
-            margin: 0;
-            font-size: 14px;
-            font-weight: bold;
-            text-align: center;
-        }
-
-        /* Video List Layout */
-        .video-item {
-            background: white;
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 4px;
-            border-left: 5px solid #FF0000; /* Video tag accent */
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-        .video-thumbnail {
-            width: 120px;
-            height: 68px;
-            background: #000;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            border-radius: 4px;
-            font-weight: bold;
-            text-shadow: 1px 1px 2px #000;
-            background-size: cover;
-            background-position: center;
-        }
-        .video-info h3 {
-            margin: 0 0 5px 0;
-        }
-    </style>
+    <title>SuperNova Browser Simulator</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <h2 style="font-family: 'Trebuchet MS', sans-serif; color: white;">Travel the Galaxy!</h2>
-    
-    <!-- Filter Navigation Bar -->
-    <div class="nav-tabs">
-        <button class="tab-button active" data-type="websites">Websites</button>
-        <button class="tab-button" data-type="images">Images</button>
-        <button class="tab-button" data-type="videos">Videos</button>
-    </div>
+    <div class="browser-container">
+        <!-- Top Browser Navigation Bar -->
+        <div class="toolbar">
+            <div class="nav-buttons">
+                <button id="back-btn" class="btn" title="Back">←</button>
+                <button id="forward-btn" class="btn" title="Forward">→</button>
+                <button id="reload-btn" class="btn" title="Reload">↻</button>
+            </div>
+            <div class="address-bar-container">
+                <input type="text" id="url-input" value="http://localhost:9898/SuperNova/Home.html" readonly>
+            </div>
+        </div>
 
-    <!-- Search Input and Button -->
-    <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Type your search here...">
-        <button id="searchButton">Go!</button>
-    </div>
-
-    <!-- Container where results will appear -->
-    <div id="searchResults"></div>
-
-        <script>
-    // 1. Separate databases for Websites, Images, and Videos
-    const websiteData = [
-        { title: "The Angry English Guy", content: "Welcome to my Website!", url: "https://theangryenglishguy.blog" },
-        { title: "GOG.com", content: "Download the best classic and new games on Windows, Mac & Linux. A vast selection of titles, DRM-free.", url: "https://gog.com" },
-        { title: "The Ident Gallery", content: "Preserving British television presentation since 2007", url: "https://theident.gallery" },
-        { title: "BingeBrowse (formerly BingeBuster)", content: "Your Video Store", url: "https://bingebrowse.net" },
-        { title: "TVARK", content: "The Television Museum", url: "https://tvark.org" },
-        { title: "Internet Archive", content: "Search the history of more than 1 trillion web pages on the Internet.", url: "https://archive.org" },
-        { title: "FreeCodeCamp", content: "Build Your Skills for Free.", url: "https://freecodecamp.org"},
-        { title: "Canva: Visual Suite for Everyone", content: "Canva is a free-to-use online graphic design tool.", url: "https://canva.com"},
-        { title: "Time and Date", content: "Welcome to the world's top site for time, time zones, and astronomy.", url: "https://timeanddate.com"},
-        { title: "Atlas Obscura: Curious Destinations", content: "Explore the world's most unique travel destinations and curious places.", url: "https://atlasobscura.com"},
-        { title: "Maths is Fun", content: "Math explained in easy language, plus puzzles, games, worksheets.", url: "https://www.mathsisfun.com"},
-        { title: "SuperCook - Zero Waste Recipe Generator", content: "Supercook is a recipe search engine that lets you search by ingredients.", url: "https://www.supercook.com"},
-        { title: "Instructables", content: "Instructables is a community for people who like to make things.", url: "https://www.instructables.com"},
-        { title: "Terraink: Free Map Poster and Wallpaper Creator", content: "Free online map poster and wallpaper generator. Design custom, print-ready map art for any city or location — export as PNG, PDF, or SVG.", url: "https://terraink.app"}
-    ];
-
-    const imageData = [
-        { title: "Vaporwave Wallpapers - Wallpaper Cave", url: "https://wallpapercave.com/vaporwave-wallpapers" },
-        { title: "Orion Nebula", url: "https://unsplash.com" },
-        { title: "Milky Way Galaxy", url: "https://unsplash.com" },
-        { title: "Andromeda Horizon", url: "https://unsplash.com" },
-        { title: "Frutiger Aero", url: "https://unsplash.com"},
-        { title: "Frutiger Metro", url: "https://unsplash.com"}
-    ];
-
-    const videoData = [
-        { title: "nobody here", duration: "2:05", url: "https://youtu.be/-RFunvF0mDw?si=qHWT-rqywMdgShdC", thumb: "https://www.youtube.com/watch?v=-RFunvF0mDw" },
-        { title: "How Supernovas Form", duration: "12:45", url: "https://youtube.com", thumb: "https://unsplash.com" },
-        { title: "Black Holes Explained", duration: "18:20", url: "https://youtube.com", thumb: "https://unsplash.com" }
-    ];
-
-    // Track the actively selected tab mode
-    let currentMode = 'websites';
-
-    // 2. Grab HTML elements
-    const searchInput = document.getElementById('searchInput');
-    const searchButton = document.getElementById('searchButton');
-    const searchResults = document.getElementById('searchResults');
-    const tabButtons = document.querySelectorAll('.tab-button');
-
-    // 3. Tab switching logic
-    tabButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            tabButtons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
+        <!-- Main Viewport Window -->
+        <div class="viewport">
             
-            currentMode = button.getAttribute('data-type');
-            performSearch(); 
-        });
-    });
+            <!-- VIEW A: SuperNova Homepage -->
+            <div id="homepage-view" class="page-container active">
+                <div class="main-content">
+                    <!-- Split Box Logo Design -->
+                    <div class="logo-container">
+                        <span class="text-super">SUPER</span>
+                        <span class="box-nova">NOVA</span>
+                    </div>
+                    <p class="tagline">Travel the Galaxy!</p>
+                    
+                    <!-- Search Controls -->
+                    <div class="search-box">
+                        <input type="text" id="search-input" placeholder="Search Anything...">
+                        <button id="go-btn">Go!</button>
+                    </div>
+                </div>
 
-    // 4. Define the search and rendering mechanics
-function performSearch() {
-    const query = searchInput.value.toLowerCase().trim();
-    searchResults.innerHTML = '';
+                <!-- Bottom Right Utility Cluster -->
+                <div class="footer-buttons">
+                    <button class="footer-btn">Add your Website</button>
+                    <button class="footer-btn">About</button>
+                    <button class="footer-btn">Settings</button>
+                </div>
+            </div>
 
-    // NEW CHECK: If the search box is completely empty, stop right here and show nothing
-    if (query === '') {
-        return; 
-    }
+            <!-- VIEW B: Dynamic Search Results Page -->
+            <div id="results-view" class="page-container">
+                <div class="results-header">
+                    <div class="results-logo" id="logo-return">
+                        <span class="text-super-sm">SUPER</span><span class="box-nova-sm">NOVA</span>
+                    </div>
+                    <div class="results-search-box">
+                        <input type="text" id="results-search-input">
+                        <button id="results-go-btn">Search</button>
+                    </div>
+                </div>
+                
+                <!-- Results Output Destination -->
+                <div class="results-body">
+                    <p class="search-summary">Showing results for: <span id="query-highlight"></span></p>
+                    <div id="results-list"></div>
+                </div>
+            </div>
 
-    // Execute filtering based on the active structural view
-    if (currentMode === 'websites') {
-        // Updated logic: Only filters database items matching the input text
-        const filtered = websiteData.filter(item => 
-            item.title.toLowerCase().includes(query) || item.content.toLowerCase().includes(query)
-        );
-        renderWebsites(filtered);
+        </div>
+    </div>
 
-    } else if (currentMode === 'images') {
-        const filtered = imageData.filter(item => 
-            item.title.toLowerCase().includes(query)
-        );
-        renderImages(filtered);
-
-    } else if (currentMode === 'videos') {
-        const filtered = videoData.filter(item => 
-            item.title.toLowerCase().includes(query)
-        );
-        renderVideos(filtered);
-    }
-}
-
-
-    // 5. Render engine that builds working links
-    function performSearch() {
-        const query = searchInput.value.toLowerCase().trim();
-        searchResults.innerHTML = ''; // Clear prior results
-
-        // Pick data group based on tab selection
-        let masterList = [];
-        if (currentMode === 'websites') masterList = websiteData;
-        if (currentMode === 'images') masterList = imageData;
-        if (currentMode === 'videos') masterList = videoData;
-
-        // Filter through title or optional text content
-        const filtered = masterList.filter(item => {
-            const matchTitle = item.title.toLowerCase().includes(query);
-            const matchContent = item.content ? item.content.toLowerCase().includes(query) : false;
-            return matchTitle || matchContent;
-        });
-
-        // Show a message if nothing is found
-        if (filtered.length === 0) {
-            searchResults.innerHTML = `<p class="no-results">No galactic records found matching your query.</p>`;
-            return;
-        }
-
-        // Render matching structures based on current active view mode
-        if (currentMode === 'websites') {
-            filtered.forEach(item => {
-                searchResults.innerHTML += `
-                    <div class="result-item">
-                        <h3><a href="${item.url}" target="_blank" rel="noopener">${item.title}</a></h3>
-                        <p style="margin:5px 0 0 0; color:#555;">${item.content}</p>
-                    </div>`;
-            });
-        } 
-        
-        else if (currentMode === 'images') {
-            let gridHTML = '<div class="image-grid">';
-            filtered.forEach(item => {
-                gridHTML += `
-                    <a href="${item.url}" target="_blank" rel="noopener" class="image-card" style="text-decoration: none; color: inherit;">
-                        <img src="${item.url}" alt="${item.title}">
-                        <p>${item.title}</p>
-                    </a>`;
-            });
-            gridHTML += '</div>';
-            searchResults.innerHTML = gridHTML;
-        } 
-        
-        else if (currentMode === 'videos') {
-            filtered.forEach(item => {
-                searchResults.innerHTML += `
-                    <a href="${item.url}" target="_blank" rel="noopener" class="video-item" style="text-decoration: none; color: inherit; width: 100%;">
-                        <div class="video-thumbnail" style="background-image: url('${item.thumb}')">
-                            <span>${item.duration}</span>
-                        </div>
-                        <div class="video-info">
-                            <h3 style="color: #007BFF;">${item.title}</h3>
-                            <p style="margin: 0; color: #666;">Duration: ${item.duration}</p>
-                        </div>
-                    </a>`;
-            });
-        }
-    }
-
-    // Run empty filter on load so initial list displays immediately
-    // performSearch();
-    searchInput.addEventListener('input', performSearch);
- </script>
-
-<!-- Back Button -->
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<style>
-body {
-margin: 0;
-padding: 0;
-height: 100vh;
-background-color: #f4f4f4;
-font-family: sans-serif;
-
-}
-
-
-.button-container {
-position: fixed; 
-bottom: 20px;
-right: 20px;
-display: flex;
-gap: 10px;
-z-index: 1000;
-
-}
-
-
-.button-container button {
-padding: 10px 15px;
-font-size: 16px;
-border: none;
-border-radius: 5px;
-background-color: #007bff;
-color: white;
-cursor: pointer;
-transition: background-color 0.2s;
-
-}
-
-.button-container button:hover {
-background-color: #0056b3;
-
-}
-
-</style>
-</head>
+</body>
 </html>
 
-<div class="button-container">
-<a href="Home.html">
-<button>Back</button>
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: #0b1d3a;
+    overflow: hidden;
+    color: #ffffff;
+}
+
+.browser-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+/* Browser Toolbar Control UI */
+.toolbar {
+    display: flex;
+    align-items: center;
+    background-color: #18181b;
+    padding: 8px;
+    gap: 12px;
+    border-bottom: 1px solid #27272a;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 6px;
+}
+
+.btn {
+    background: none;
+    border: none;
+    color: #a1a1aa;
+    font-size: 16px;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #27272a;
+    color: #ffffff;
+}
+
+.address-bar-container {
+    flex-grow: 1;
+}
+
+#url-input {
+    width: 100%;
+    height: 32px;
+    background-color: #09090b;
+    border: 1px solid #27272a;
+    border-radius: 6px;
+    color: #71717a;
+    padding: 0 12px;
+    font-size: 13px;
+    outline: none;
+}
+
+/* View Framework */
+.viewport {
+    flex-grow: 1;
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.page-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    flex-direction: column;
+}
+
+.page-container.active {
+    display: flex;
+}
+
+/* Homepage View Panel Styles */
+#homepage-view {
+    background: radial-gradient(circle at center, #0c2b5e 0%, #030e21 100%);
+    justify-content: center;
+    align-items: center;
+}
+
+.main-content {
+    text-align: center;
+    margin-bottom: 80px;
+}
+
+/* Core Split Logo Element */
+.logo-container {
+    font-size: 54px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+}
+
+.text-super {
+    color: #ffffff;
+    margin-right: 10px;
+}
+
+.box-nova {
+    background-color: #ffffff;
+    color: #030e21;
+    padding: 2px 14px;
+    border-radius: 4px;
+}
+
+.tagline {
+    font-size: 18px;
+    color: #a0c4ff;
+    margin-bottom: 30px;
+}
+
+/* Search input components */
+.search-box {
+    display: flex;
+    width: 520px;
+    max-width: 90vw;
+    background-color: #ffffff;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+}
+
+#search-input {
+    flex-grow: 1;
+    border: none;
+    padding: 12px 16px;
+    font-size: 15px;
+    outline: none;
+    color: #333333;
+}
+
+#go-btn {
+    background-color: #0077ff;
+    color: #ffffff;
+    border: none;
+    padding: 0 24px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+#go-btn:hover {
+    background-color: #0055cc;
+}
+
+/* Footer Bottom Right Elements */
+.footer-buttons {
+    position: absolute;
+    bottom: 24px;
+    right: 24px;
+    display: flex;
+    gap: 12px;
+}
+
+.footer-btn {
+    background-color: #0077ff;
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    font-size: 13px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.footer-btn:hover {
+    background-color: #0055cc;
+}
+
+/* Search Results Layout Elements */
+#results-view {
+    background-color: #030e21;
+}
+
+.results-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 16px 24px;
+    border-bottom: 1px solid #112547;
+    background-color: #061530;
+}
+
+.results-logo {
+    cursor: pointer;
+    font-weight: 800;
+    font-size: 20px;
+}
+
+.text-super-sm { color: #ffffff; margin-right: 4px; }
+.box-nova-sm { background-color: #ffffff; color: #030e21; padding: 1px 6px; border-radius: 2px; }
+
+.results-search-box {
+    display: flex;
+    width: 450px;
+    background-color: #ffffff;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+#results-search-input {
+    flex-grow: 1;
+    border: none;
+    padding: 6px 12px;
+    font-size: 14px;
+    outline: none;
+    color: #333333;
+}
+
+#results-go-btn {
+    background-color: #0077ff;
+    color: #ffffff;
+    border: none;
+    padding: 0 16px;
+    cursor: pointer;
+}
+
+/* Dynamic Result Feed Blocks */
+.results-body {
+    flex-grow: 1;
+    padding: 24px;
+    overflow-y: auto;
+}
+
+.search-summary {
+    font-size: 14px;
+    color: #718096;
+    margin-bottom: 20px;
+}
+
+#query-highlight {
+    color: #0077ff;
+    font-weight: 600;
+}
+
+.result-item {
+    margin-bottom: 24px;
+    max-width: 650px;
+}
+
+.result-item h3 {
+    font-size: 18px;
+    margin-bottom: 4px;
+}
+
+.result-item h3 a {
+    color: #4da3ff;
+    text-decoration: none;
+}
+
+.result-item h3 a:hover {
+    text-decoration: underline;
+}
+
+.result-url {
+    font-size: 12px;
+    color: #10b981;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.result-snippet {
+    font-size: 14px;
+    color: #cbd5e1;
+    line-height: 1.5;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // UI Elements
+    const homepageView = document.getElementById('homepage-view');
+    const resultsView = document.getElementById('results-view');
+    const searchInput = document.getElementById('search-input');
+    const goBtn = document.getElementById('go-btn');
+    const resultsSearchInput = document.getElementById('results-search-input');
+    const resultsGoBtn = document.getElementById('results-go-btn');
+    const queryHighlight = document.getElementById('query-highlight');
+    const resultsList = document.getElementById('results-list');
+    
+    const backBtn = document.getElementById('back-btn');
+    const logoReturn = document.getElementById('logo-return');
+    const urlInput = document.getElementById('url-input');
+
+    // Database of mock planetary data matching the SuperNova search concept
+    const mockDatabase = [
+        { title: "Andromeda Galaxy - Astronomy Guide", url: "https://spacefact.org", snippet: "Explore coordinates, planetary structures, and recent exploration telescope imagery of our closest galactic neighbor." },
+        { title: "How to Build Rocket Propulsion Engines", url: "https://star-drive.net", snippet: "A technical guide covering chemical reactions, ion thusters, and structural system configurations for modern spaceships." },
+        { title: "Space Exploration News & Mission Updates", url: "https://cosmictimes.com", snippet: "Breaking discoveries from remote rovers across the Martian landscape, outer asteroids, and deep space telemetry feeds." },
+        { title: "Supernova Explorations: The Lifespan of Stars", url: "https://astrophysics.edu", snippet: "An analytical breakdown detailing stellar collapse occurrences, high-energy nebula formation, and cosmic dust clouds." },
+        { title: "Coding Web Browsers using Simple Javascript Applications", url: "https://koderdev.io", snippet: "Learn core procedures to build state-switching views, address inputs, and layout viewports within local editors." }
+    ];
+
+    // Function to run search actions
+    function executeSearch(query) {
+        if (!query.trim()) return;
+
+        // Sync inputs across both panels
+        searchInput.value = query;
+        resultsSearchInput.value = query;
+        queryHighlight.textContent = `"${query}"`;
+        
+        // Update mock browser address input
+        urlInput.value = `http://localhost:9898/SuperNova/Search?q=${encodeURIComponent(query)}`;
+
+        // Clear any old items
+        resultsList.innerHTML = '';
+
+        // Filter database to match words, or return random elements if no match
+        let matches = mockDatabase.filter(item => 
+            item.title.toLowerCase().includes(query.toLowerCase()) || 
+            item.snippet.toLowerCase().includes(query.toLowerCase())
+        );
+
+        // Fallback layout if specific terms aren't in the mock list
+        if (matches.length === 0) {
+            matches = [
+                {
+                    title: `${query} - Cosmological Search Resource`,
+                    url: `https://supernova.search{encodeURIComponent(query)}`,
+                    snippet: `Deep space data scanners returned global index files matching your inquiry parameters for "${query}". No dangerous dark matter detected.`
+                },
+                ...mockDatabase.slice(0, 2) // Append standard items to fill screen
+            ];
+        }
+
+        // Render nodes into existence
+        matches.forEach(item => {
+            const block = document.createElement('div');
+            block.className = 'result-item';
+            block.innerHTML = `
+                <h3><a href="#" onclick="alert('Navigating to live external sites requires an active proxy domain.'); return false;">${item.title}</a></h3>
+                <span class="result-url">${item.url}</span>
+                <p class="result-snippet">${item.snippet}</p>
+            `;
+            resultsList.appendChild(block);
+        });
+
+        // Toggle visibility state classes
+        homepageView.classList.remove('active');
+        resultsView.classList.add('active');
+    }
+
+    // Function to step back to home layout
+    function returnToHome() {
+        resultsView.classList.remove('active');
+        homepageView.classList.add('active');
+        urlInput.value = "http://localhost:9898/SuperNova/Home.html";
+        searchInput.value = '';
+    }
+
+    // Event Triggers
+    goBtn.addEventListener('click', () => executeSearch(searchInput.value));
+    resultsGoBtn.addEventListener('click', () => executeSearch(resultsSearchInput.value));
+
+    searchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') executeSearch(searchInput.value); });
+    resultsSearchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') executeSearch(resultsSearchInput.value); });
+
+    // Back paths
+    backBtn.addEventListener('click', () => { if (resultsView.classList.contains('active')) returnToHome(); });
+    logoReturn.addEventListener('click', returnToHome);
+});
+</script>
