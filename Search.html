@@ -60,22 +60,139 @@
                         <button id="results-go-btn">Search</button>
                     </div>
                 </div>
+
+                <!-- Media Navigation Bar Verticals -->
+                <div class="media-nav-bar">
+                    <button class="media-tab active" data-media="web">Web</button>
+                    <button class="media-tab" data-media="images">Images</button>
+                    <button class="media-tab" data-media="videos">Videos</button>
+                </div>
                 
-                <!-- Results Output Destination -->
+                <!-- Results Content Stream -->
                 <div class="results-body">
+                    <div class="search-filter-tabs">
+                        <button id="filter-all-btn" class="filter-tab active">All Results</button>
+                        <button id="filter-human-btn" class="filter-tab">👤 Human Only (Indie Web)</button>
+                    </div>
+                    
                     <p class="search-summary">Showing results for: <span id="query-highlight"></span></p>
+                    
+                    <!-- Simulated Ad Banner (Toggled by Settings) -->
+                    <div id="simulated-ad" class="slop-ad-banner">
+                        <span>SPONSORED SLOP: Get Rich Quick With AI-Generated Digital Art Shoes!</span>
+                    </div>
+
                     <div id="results-list"></div>
                 </div>
             </div>
+        </div>
+    </div>
 
+    <!-- MODAL POPUP LAYER COLLECTION -->
+    
+    <!-- Modal 1: Add Your Website -->
+    <div id="modal-add" class="modal-overlay">
+        <div class="modal-card">
+            <button class="modal-close">&times;</button>
+            <h2>Add Your Website</h2>
+            <p>Submit your destination into the live memory matrix index loop.</p>
+            <div class="modal-form">
+                <input type="text" id="form-title" placeholder="Website Name / Title">
+                <input type="url" id="form-url" placeholder="https://yourlink.com">
+                <input type="text" id="form-snippet" placeholder="Brief Description / Snippet">
+                <button id="form-submit-btn">Index Destination</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2: About -->
+    <div id="modal-about" class="modal-overlay">
+        <div class="modal-card">
+            <button class="modal-close">&times;</button>
+            <h2>About SuperNova</h2>
+            <div class="modal-scroll-content">
+                <p><strong>SuperNova Anti-Slop Browser v2.0.0</strong></p>
+                <p>A specialized, human-curated sandbox web explorer running natively via system variable tokens.</p>
+                <p>Engineered to bypass structural platform tracking, corporate spam indices, and machine noise.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 3: Settings with Accessibility and Aesthetics Sections -->
+    <div id="modal-settings" class="modal-overlay">
+        <div class="modal-card wide-card structural-card">
+            <h2>Browser Configuration</h2>
+            
+            <div class="settings-tabs">
+                <button class="tab-btn active" data-tab="tab-core">Core</button>
+                <button class="tab-btn" data-tab="tab-aesthetics">Aesthetics</button>
+                <button class="tab-btn" data-tab="tab-accessibility">Accessibility</button>
+            </div>
+
+            <div class="modal-scroll-body">
+                <!-- Tab: Core -->
+                <div id="tab-core" class="tab-content active">
+                    <div class="setting-item">
+                        <label>Activate Smart Ad-Blocker Core</label>
+                        <input type="checkbox" id="adblock-toggle" checked>
+                    </div>
+                    <div class="setting-item">
+                        <label>Persistent Session Index Tracking</label>
+                        <input type="checkbox" checked>
+                    </div>
+                </div>
+
+                <!-- Tab: Aesthetics -->
+                <div id="tab-aesthetics" class="tab-content">
+                    <div class="setting-item">
+                        <label>Galactic Theme Accent</label>
+                        <select id="theme-selector">
+                            <option value="blue">Deep Quantum Blue (Default)</option>
+                            <option value="purple">Nebula Purple</option>
+                            <option value="orange">Solar Flare Orange</option>
+                            <option value="aero">Frutiger Aero (Glossy Aurora)</option>
+                            <option value="metro">Frutiger Metro (Cyan Scenecore)</option>
+                            <option value="frutevil">Frutevil Aero (Dystopian Fire)</option>
+                            <option value="cyberpunk">Cyberpunk (Synthwave Grid)</option>
+                            <option value="vaporwave">Vaporwave (Classical Dreamscape)</option>
+                            <option value="synthwave">Synthwave (80s Sunset Palms)</option>
+                            <option value="wacky">Wacky Pomo (90s Cartoon Splat)</option>
+                            <option value="y2k">Y2K (Cyber Chromism)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Tab: Accessibility -->
+                <div id="tab-accessibility" class="tab-content">
+                    <div class="setting-item">
+                        <label>Interface Font Scaling</label>
+                        <select id="font-scale-selector">
+                            <option value="100%">Normal (Default)</option>
+                            <option value="115%">Large (115%)</option>
+                            <option value="130%">Extra Large (130%)</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label>High Contrast Filter Mode</label>
+                        <input type="checkbox" id="high-contrast-toggle">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fixed Footer Actions -->
+            <div class="modal-fixed-footer">
+                <p class="setting-note">Memory writes to localStorage profile variables.</p>
+                <button class="save-close-action-btn">Save & Close</button>
+            </div>
         </div>
     </div>
 
 </body>
 </html>
 
+
 <style>
-* {
+ * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -84,10 +201,11 @@
 body, html {
     width: 100%;
     height: 100%;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    background-color: #0b1d3a;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background-color: #030e21;
     overflow: hidden;
     color: #ffffff;
+    transition: filter 0.2s;
 }
 
 .browser-container {
@@ -97,14 +215,14 @@ body, html {
     height: 100%;
 }
 
-/* Browser Toolbar Control UI */
+/* Browser Header Control UI */
 .toolbar {
     display: flex;
     align-items: center;
-    background-color: #18181b;
+    background-color: #09090b;
     padding: 8px;
     gap: 12px;
-    border-bottom: 1px solid #27272a;
+    border-bottom: 1px solid #18181b;
 }
 
 .nav-buttons {
@@ -115,7 +233,7 @@ body, html {
 .btn {
     background: none;
     border: none;
-    color: #a1a1aa;
+    color: #71717a;
     font-size: 16px;
     width: 32px;
     height: 32px;
@@ -135,16 +253,16 @@ body, html {
 #url-input {
     width: 100%;
     height: 32px;
-    background-color: #09090b;
+    background-color: #18181b;
     border: 1px solid #27272a;
     border-radius: 6px;
-    color: #71717a;
+    color: #a1a1aa;
     padding: 0 12px;
     font-size: 13px;
     outline: none;
 }
 
-/* View Framework */
+/* Base View Layouts */
 .viewport {
     flex-grow: 1;
     position: relative;
@@ -166,83 +284,64 @@ body, html {
     display: flex;
 }
 
-/* Homepage View Panel Styles */
+/* Search Engine Center Layout */
 #homepage-view {
-    background: radial-gradient(circle at center, #0c2b5e 0%, #030e21 100%);
     justify-content: center;
     align-items: center;
+    transition: background 0.3s;
 }
 
 .main-content {
     text-align: center;
-    margin-bottom: 80px;
+    margin-bottom: 60px;
 }
 
-/* Core Split Logo Element */
 .logo-container {
-    font-size: 54px;
-    font-weight: 800;
+    font-size: 56px;
+    font-weight: 900;
     letter-spacing: 2px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 12px;
+    margin-bottom: 6px;
 }
 
-.text-super {
-    color: #ffffff;
-    margin-right: 10px;
-}
-
-.box-nova {
-    background-color: #ffffff;
-    color: #030e21;
-    padding: 2px 14px;
-    border-radius: 4px;
-}
+.text-super { color: #ffffff; margin-right: 8px; }
+.box-nova { background-color: #ffffff; color: #030e21; padding: 2px 12px; border-radius: 4px; }
 
 .tagline {
-    font-size: 18px;
-    color: #a0c4ff;
-    margin-bottom: 30px;
+    font-size: 16px;
+    color: #38bdf8;
+    margin-bottom: 32px;
 }
 
-/* Search input components */
 .search-box {
     display: flex;
-    width: 520px;
+    width: 500px;
     max-width: 90vw;
     background-color: #ffffff;
     border-radius: 6px;
     overflow: hidden;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.4);
 }
 
 #search-input {
     flex-grow: 1;
     border: none;
-    padding: 12px 16px;
+    padding: 14px 18px;
     font-size: 15px;
     outline: none;
-    color: #333333;
+    color: #1e293b;
 }
 
 #go-btn {
-    background-color: #0077ff;
-    color: #ffffff;
     border: none;
     padding: 0 24px;
     font-size: 15px;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
-    transition: background 0.2s;
 }
 
-#go-btn:hover {
-    background-color: #0055cc;
-}
-
-/* Footer Bottom Right Elements */
+/* Footer layout navigation buttons */
 .footer-buttons {
     position: absolute;
     bottom: 24px;
@@ -252,121 +351,114 @@ body, html {
 }
 
 .footer-btn {
-    background-color: #0077ff;
+    background-color: rgba(255,255,255,0.08);
     color: #ffffff;
-    border: none;
+    border: 1px solid rgba(255,255,255,0.1);
     padding: 8px 16px;
     font-size: 13px;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
 }
 
-.footer-btn:hover {
-    background-color: #0055cc;
-}
+.footer-btn:hover { background-color: rgba(255,255,255,0.15); }
 
-/* Search Results Layout Elements */
-#results-view {
-    background-color: #030e21;
-}
-
-.results-header {
+/* Results Component Streams */
+.media-nav-bar {
     display: flex;
-    align-items: center;
     gap: 20px;
-    padding: 16px 24px;
-    border-bottom: 1px solid #112547;
-    background-color: #061530;
+    padding: 0 24px;
+    background-color: #061224;
+    border-bottom: 1px solid #112240;
 }
 
-.results-logo {
-    cursor: pointer;
-    font-weight: 800;
-    font-size: 20px;
-}
-
-.text-super-sm { color: #ffffff; margin-right: 4px; }
-.box-nova-sm { background-color: #ffffff; color: #030e21; padding: 1px 6px; border-radius: 2px; }
-
-.results-search-box {
-    display: flex;
-    width: 450px;
-    background-color: #ffffff;
-    border-radius: 4px;
-    overflow: hidden;
-}
-
-#results-search-input {
-    flex-grow: 1;
+.media-tab {
+    background: none;
     border: none;
-    padding: 6px 12px;
+    color: #64748b;
+    padding: 12px 4px;
     font-size: 14px;
-    outline: none;
-    color: #333333;
-}
-
-#results-go-btn {
-    background-color: #0077ff;
-    color: #ffffff;
-    border: none;
-    padding: 0 16px;
     cursor: pointer;
+    position: relative;
 }
 
-/* Dynamic Result Feed Blocks */
-.results-body {
-    flex-grow: 1;
-    padding: 24px;
-    overflow-y: auto;
+.media-tab.active { color: #ffffff; font-weight: 600; }
+.media-tab.active::after {
+    content: ''; position: absolute; bottom: -1px; left: 0; width: 100%; height: 2px; background-color: #38bdf8;
 }
 
-.search-summary {
-    font-size: 14px;
-    color: #718096;
-    margin-bottom: 20px;
+.results-body { flex-grow: 1; padding: 24px; overflow-y: auto; background-color: #020a14; }
+
+/* Anti-Slop Content Filters */
+.search-filter-tabs { display: flex; gap: 10px; margin-bottom: 18px; }
+.filter-tab {
+    background-color: #0b192e; border: 1px solid #1e3a8a; color: #38bdf8;
+    padding: 6px 14px; font-size: 13px; border-radius: 20px; cursor: pointer;
+}
+.filter-tab.active { background-color: #38bdf8; color: #020a14; border-color: #38bdf8; font-weight: 600; }
+
+.slop-ad-banner {
+    background: linear-gradient(90deg, #ec4899 0%, #8b5cf6 100%);
+    padding: 12px; font-size: 12px; font-weight: bold; text-align: center; border-radius: 6px; margin-bottom: 20px;
 }
 
-#query-highlight {
-    color: #0077ff;
-    font-weight: 600;
-}
+.search-summary { font-size: 14px; color: #64748b; margin-bottom: 16px; }
+#query-highlight { color: #38bdf8; font-weight: bold; }
 
-.result-item {
-    margin-bottom: 24px;
-    max-width: 650px;
-}
+/* Result Layout Formats (Web, Image Grid, Video Feed) */
+.result-item { margin-bottom: 24px; max-width: 680px; }
+.result-item h3 a { color: #38bdf8; text-decoration: none; font-size: 18px; }
+.result-item h3 a:hover { text-decoration: underline; }
+.result-url { font-size: 12px; color: #10b981; display: block; margin: 2px 0 4px 0; }
+.result-snippet { font-size: 14px; color: #cbd5e1; line-height: 1.5; }
 
-.result-item h3 {
-    font-size: 18px;
-    margin-bottom: 4px;
-}
+.image-results-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; }
+.image-result-item { background-color: #0b192e; border: 1px solid #1e3a8a; border-radius: 6px; overflow: hidden; }
+.image-thumb-placeholder { width: 100%; height: 120px; background-color: #020a14; }
+.image-result-item span { display: block; padding: 8px; font-size: 12px; color: #94a3b8; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-.result-item h3 a {
-    color: #4da3ff;
-    text-decoration: none;
-}
+.video-result-item { display: flex; gap: 16px; background-color: #0b192e; padding: 12px; border-radius: 8px; margin-bottom: 16px; }
+.video-thumb-placeholder { width: 140px; height: 80px; background-color: #020a14; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #38bdf8; }
+.video-info h4 { color: #38bdf8; font-size: 16px; margin-bottom: 4px; }
+.video-meta { font-size: 12px; color: #64748b; }
 
-.result-item h3 a:hover {
-    text-decoration: underline;
+/* Modal Display Sheets Structure */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(2,10,20,0.85);
+    backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 9999;
 }
+.modal-overlay.open { display: flex; }
+.modal-card { background-color: #0b192e; border: 1px solid #1e3a8a; border-radius: 8px; width: 420px; max-width: 95vw; padding: 24px; position: relative; }
+.modal-card h2 { font-size: 22px; margin-bottom: 14px; }
+.modal-card p { font-size: 14px; color: #94a3b8; margin-bottom: 16px; }
+.modal-close { position: absolute; top: 16px; right: 16px; background: none; border: none; color: #64748b; font-size: 24px; cursor: pointer; }
+.modal-close:hover { color: #ffffff; }
 
-.result-url {
-    font-size: 12px;
-    color: #10b981;
-    margin-bottom: 4px;
-    display: block;
-}
+.modal-form { display: flex; flex-direction: column; gap: 12px; }
+.modal-form input { padding: 10px; background-color: #020a14; border: 1px solid #1e3a8a; border-radius: 4px; color: #ffffff; outline: none; }
+#form-submit-btn { background-color: #38bdf8; border: none; padding: 12px; border-radius: 4px; font-weight: bold; cursor: pointer; color: #020a14; }
 
-.result-snippet {
-    font-size: 14px;
-    color: #cbd5e1;
-    line-height: 1.5;
-}
+/* Structural Settings Configuration Details */
+.structural-card { max-height: 460px; display: flex; flex-direction: column; padding-bottom: 10px !important; }
+.wide-card { width: 480px; }
+.settings-tabs { display: flex; gap: 8px; border-bottom: 2px solid rgba(255,255,255,0.1); margin-bottom: 14px; }
+.tab-btn { background: none; border: none; color: #64748b; padding: 6px 12px; font-size: 13px; font-weight: bold; cursor: pointer; }
+.tab-btn.active { background-color: rgba(255,255,255,0.08); color: #ffffff; border-radius: 4px 4px 0 0; }
+.modal-scroll-body { flex-grow: 1; overflow-y: auto; margin-bottom: 12px; }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+.setting-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.setting-item select { padding: 4px 8px; background-color: #020a14; color: #ffffff; border: 1px solid #1e3a8a; border-radius: 4px; }
+.modal-fixed-footer { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 12px; display: flex; justify-content: space-between; align-items: center; }
+.setting-note { font-size: 11px !important; color: #64748b !important; margin: 0 !important; }
+.save-close-action-btn { background-color: #10b981; color: #ffffff; border: none; padding: 8px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; }
+.save-close-action-btn:hover { background-color: #059669; }
+
 </style>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    // UI Elements
+    // --- 1. CORE ELEMENT BINDINGS ---
     const homepageView = document.getElementById('homepage-view');
     const resultsView = document.getElementById('results-view');
     const searchInput = document.getElementById('search-input');
@@ -375,113 +467,176 @@ document.addEventListener('DOMContentLoaded', () => {
     const resultsGoBtn = document.getElementById('results-go-btn');
     const queryHighlight = document.getElementById('query-highlight');
     const resultsList = document.getElementById('results-list');
-    
+    const urlInput = document.getElementById('url-input');
     const backBtn = document.getElementById('back-btn');
     const logoReturn = document.getElementById('logo-return');
-    const urlInput = document.getElementById('url-input');
 
-        // Database of mock planetary and user-provided live web data
+    // --- 2. CONFIGURATION & ACCESSABILITY SETTINGS ---
+    const themeSelector = document.getElementById('theme-selector');
+    const logoContainer = document.querySelector('.logo-container');
+    const adBlockToggle = document.getElementById('adblock-toggle');
+    const adElement = document.getElementById('simulated-ad');
+    const filterAllBtn = document.getElementById('filter-all-btn');
+    const filterHumanBtn = document.getElementById('filter-human-btn');
+    const fontScaleSelector = document.getElementById('font-scale-selector');
+    const contrastToggle = document.getElementById('high-contrast-toggle');
+
+    let currentMediaMode = 'web';
+    let currentFilterMode = 'all';
+
+    // --- 3. MOCK INDEX DATABASE ---
     const mockDatabase = [
         { 
             title: "The Angry English Guy – Nostalgia & Digital Culture Blog", 
             url: "https://theangryenglishguy.blog", 
-            snippet: "Welcome to the central platform of Ethan D (The Angry English Guy). Exploring media compilations, 2009 Cartoon Network montages, and vintage E4 British TV ident histories." 
+            snippet: "Welcome to the central platform of Ethan D (The Angry English Guy). Exploring media compilations, 2009 Cartoon Network montages, and vintage E4 British TV ident histories.",
+            isHuman: true,
+            images: ["https://picsum.photos", "https://picsum.photos"]
         },
         { 
             title: "BingeBrowse — Your Streaming Services as a 3D Video Store", 
             url: "https://bingebrowse.net", 
-            snippet: "Step inside an interactive 3D rental store environment using WebGL. Seamlessly browse movies, sync watchlists, and organize your Plex, Jellyfin, or Emby streaming catalogs." 
+            snippet: "Step inside an interactive 3D rental store environment using WebGL. Seamlessly browse movies, sync watchlists, and organize your streaming catalogs.",
+            isHuman: true,
+            images: ["https://picsum.photos", "https://picsum.photos"]
         },
         { 
-            title: "GOG.com", 
-            url: "https://gog.com", 
-            snippet: "Download the best classic and new games on Windows, Mac & Linux. A vast selection of titles, DRM-free, with free goodies and 30-day money-back guarantee." 
-        },
-        { 
-            title: "Andromeda Galaxy - Astronomy Guide", 
-            url: "https://spacefact.org", 
-            snippet: "Explore coordinates, planetary structures, and recent exploration telescope imagery of our closest galactic neighbor." 
-        },
-        { 
-            title: "How to Build Rocket Propulsion Engines", 
-            url: "https://star-drive.net", 
-            snippet: "A technical guide covering chemical reactions, ion thrusters, and structural system configurations for modern spaceships." 
-        },
-        { 
-            title: "Space Exploration News & Mission Updates", 
-            url: "https://cosmictimes.com", 
-            snippet: "Breaking discoveries from remote rovers across the Martian landscape, outer asteroids, and deep space telemetry feeds." 
+            title: "SPONSORED SLOP LINK: Automated AI Content Generator Machine", 
+            url: "https://automated-slop-machine.biz", 
+            snippet: "Instantly spin 50,000 keyword phrase documents using autogenerated bot algorithms to inflate site clicks.",
+            isHuman: false,
+            images: []
         }
     ];
 
+    // --- 4. PERSISTENT STORAGE APPLICATION THEME ENGINE ---
+    const savedTheme = localStorage.getItem('supernova_theme') || 'blue';
+    if (themeSelector) {
+        themeSelector.value = savedTheme;
+    }
 
-    // Function to run search actions
-    function executeSearch(query) {
-        if (!query.trim()) return;
+    function applyThemeEngine(themeName) {
+        if (!homepageView || !goBtn || !logoContainer) return;
 
-        // Sync inputs across both panels
-        searchInput.value = query;
-        resultsSearchInput.value = query;
-        queryHighlight.textContent = `"${query}"`;
+        // Reset elements back to clean default blue tokens
+        homepageView.style.background = 'radial-gradient(circle at center, #0c2b5e 0%, #030e21 100%)';
+        homepageView.style.backgroundImage = 'none';
+        homepageView.style.fontFamily = 'sans-serif';
+        logoContainer.style.fontFamily = 'sans-serif';
+        logoContainer.style.textShadow = 'none';
+        logoContainer.style.letterSpacing = '2px';
+        logoContainer.style.color = '#ffffff';
+        goBtn.style.backgroundColor = '#0077ff';
+        goBtn.style.borderRadius = '4px';
+        goBtn.style.border = 'none';
+        goBtn.style.boxShadow = 'none';
+        goBtn.style.color = '#ffffff';
         
-        // Update mock browser address input
-        urlInput.value = `http://localhost:9898/SuperNova/Search?q=${encodeURIComponent(query)}`;
-
-        // Clear any old items
-        resultsList.innerHTML = '';
-
-        // Filter database to match words, or return random elements if no match
-        let matches = mockDatabase.filter(item => 
-            item.title.toLowerCase().includes(query.toLowerCase()) || 
-            item.snippet.toLowerCase().includes(query.toLowerCase())
-        );
-
-        // Fallback layout if specific terms aren't in the mock list
-        if (matches.length === 0) {
-            matches = [
-                {
-                    title: `${query} - Cosmological Search Resource`,
-                    url: `https://supernova.search{encodeURIComponent(query)}`,
-                    snippet: `Deep space data scanners returned global index files matching your inquiry parameters for "${query}". No dangerous dark matter detected.`
-                },
-                ...mockDatabase.slice(0, 2) // Append standard items to fill screen
-            ];
+        const searchBox = document.querySelector('.search-box');
+        if (searchBox) { 
+            searchBox.style.borderRadius = '6px'; 
+            searchBox.style.border = 'none'; 
+            searchBox.style.boxShadow = '0 4px 14px rgba(0,0,0,0.4)'; 
         }
 
-        // Render nodes into existence
-        matches.forEach(item => {
-            const block = document.createElement('div');
-            block.className = 'result-item';
-            block.innerHTML = `
-                <h3><a href="#" onclick="alert('Navigating to live external sites requires an active proxy domain.'); return false;">${item.title}</a></h3>
-                <span class="result-url">${item.url}</span>
-                <p class="result-snippet">${item.snippet}</p>
-            `;
-            resultsList.appendChild(block);
+        // Apply aesthetic variation profiles
+        if (themeName === 'purple') {
+            homepageView.style.background = 'radial-gradient(circle at center, #3c096c 0%, #10002b 100%)';
+            goBtn.style.backgroundColor = '#7b2cbf';
+        } else if (themeName === 'orange') {
+            homepageView.style.background = 'radial-gradient(circle at center, #d94e14 0%, #2b0c00 100%)';
+            goBtn.style.backgroundColor = '#ff6b35';
+        } else if (themeName === 'aero') {
+            homepageView.style.backgroundImage = 'radial-gradient(circle at 10% 0%, rgba(255, 255, 255, 0.4) 0%, transparent 50%), linear-gradient(135deg, #25aae1 0%, #1c75bc 50%, #0054a6 100%)';
+            goBtn.style.backgroundColor = 'rgba(255, 255, 255, 0.25)';
+            goBtn.style.border = '1px solid rgba(255, 255, 255, 0.5)';
+            goBtn.style.borderRadius = '24px';
+            if (searchBox) searchBox.style.borderRadius = '24px';
+        } else if (themeName === 'metro') {
+            homepageView.style.backgroundImage = 'radial-gradient(circle at 15% 80%, rgba(0, 210, 255, 0.25) 0%, transparent 50%), linear-gradient(135deg, #020205 0%, #080d1a 100%)';
+            logoContainer.style.textShadow = '0 0 10px #00d2ff';
+            goBtn.style.backgroundColor = '#00d2ff';
+            goBtn.style.borderRadius = '0px';
+        } else if (themeName === 'frutevil') {
+            homepageView.style.backgroundImage = 'radial-gradient(circle at 30% 15%, rgba(255, 255, 255, 0.7) 0%, transparent 60%), linear-gradient(180deg, #990000 0%, #150000 100%)';
+            goBtn.style.backgroundColor = '#ff2a00';
+            goBtn.style.borderRadius = '24px';
+            logoContainer.style.fontFamily = 'Impact, sans-serif';
+        } else if (themeName === 'cyberpunk') {
+            homepageView.style.backgroundImage = 'linear-gradient(to top, rgba(255, 0, 128, 0.2) 0%, transparent 60%), linear-gradient(to bottom, #030310 0%, #0d0a2b 100%)';
+            goBtn.style.backgroundColor = '#ff007f';
+            goBtn.style.border = '2px solid #00ffff';
+            if (searchBox) searchBox.style.border = '2px solid #00ffff';
+        } else if (themeName === 'vaporwave') {
+            homepageView.style.backgroundImage = 'radial-gradient(circle at 50% 35%, #ff70a6 0%, transparent 50%), linear-gradient(180deg, #a0e7e5 0%, #ffb3c6 100%)';
+            logoContainer.style.fontFamily = '"Times New Roman", Georgia, serif';
+            goBtn.style.backgroundColor = '#ff70a6';
+            goBtn.style.borderRadius = '0px';
+        } else if (themeName === 'wacky') {
+            homepageView.style.backgroundImage = 'linear-gradient(45deg, #00f5d4 0%, #ff6b35 100%)';
+            goBtn.style.backgroundColor = '#f15bb5';
+            goBtn.style.borderRadius = '16px 4px 20px 6px';
+            logoContainer.style.fontFamily = 'Impact, sans-serif';
+        } else if (themeName === 'y2k') {
+            homepageView.style.backgroundImage = 'linear-gradient(135deg, #bde0fe 0%, #ffafcc 100%)';
+            goBtn.style.backgroundColor = 'rgba(255, 255, 255, 0.4)';
+            goBtn.style.borderRadius = '30px';
+            if (searchBox) searchBox.style.borderRadius = '30px';
+        }
+    }
+    
+    // Launch theme configuration immediately
+    applyThemeEngine(savedTheme);
+
+    if (themeSelector) {
+        themeSelector.addEventListener('change', (e) => {
+            applyThemeEngine(e.target.value);
+            localStorage.setItem('supernova_theme', e.target.value);
         });
-
-        // Toggle visibility state classes
-        homepageView.classList.remove('active');
-        resultsView.classList.add('active');
     }
 
-    // Function to step back to home layout
-    function returnToHome() {
-        resultsView.classList.remove('active');
-        homepageView.classList.add('active');
-        urlInput.value = "http://localhost:9898/SuperNova/Home.html";
-        searchInput.value = '';
-    }
+    // --- 5. SEARCH LOGIC ENGINE (DEFENSIVE ROUTING) ---
+    function executeSearch(query) {
+        if (!query || !query.trim() || !resultsList) return;
 
-    // Event Triggers
-    goBtn.addEventListener('click', () => executeSearch(searchInput.value));
-    resultsGoBtn.addEventListener('click', () => executeSearch(resultsSearchInput.value));
+        if (searchInput) searchInput.value = query;
+        if (resultsSearchInput) resultsSearchInput.value = query;
+        if (queryHighlight) queryHighlight.textContent = `"${query}"`;
+        if (urlInput) urlInput.value = `http://localhost:9898/SuperNova/Search?q=${encodeURIComponent(query)}`;
 
-    searchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') executeSearch(searchInput.value); });
-    resultsSearchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') executeSearch(resultsSearchInput.value); });
+        resultsList.innerHTML = '';
+        
+        // Handle Ad Blocker Toggle states
+        if (adElement && adBlockToggle) { 
+            adElement.style.display = adBlockToggle.checked ? 'none' : 'block'; 
+        }
 
-    // Back paths
-    backBtn.addEventListener('click', () => { if (resultsView.classList.contains('active')) returnToHome(); });
-    logoReturn.addEventListener('click', returnToHome);
-});
+        if (currentMediaMode === 'images') {
+            const grid = document.createElement('div');
+            grid.className = 'image-results-grid';
+            let match = mockDatabase.find(i => i.title.toLowerCase().includes(query.toLowerCase())) || mockDatabase[0];
+            const imgs = (match && match.images && match.images.length) ? match.images : ["https://picsum.photos", "https://picsum.photos"];
+            
+            imgs.forEach((src, idx) => {
+                const card = document.createElement('div');
+                card.className = 'image-result-item';
+                card.innerHTML = `<div class="image-thumb-placeholder" style="background-image:url('${src}');background-size:cover;background-position:center;"></div><span>Query_Asset_0${idx+1}.jpg</span>`;
+                grid.appendChild(card);
+            });
+            resultsList.appendChild(grid);
+        } else if (currentMediaMode === 'videos') {
+            for(let i = 1; i <= 2; i++) {
+                const card = document.createElement('div');
+                card.className = 'video-result-item';
+                card.innerHTML = `<div class="video-thumb-placeholder">▶</div><div class="video-info"><h4>${query} - Archival Footage Capture (Part 0${i})</h4><p class="video-meta">Indie Universe Stream • 2k views</p></div>`;
+                resultsList.appendChild(card);
+            }
+        } else {
+            // Web view filtering loops
+            let filtered = mockDatabase.filter(item => 
+                item.title.toLowerCase().includes(query.toLowerCase()) || 
+                item.snippet.toLowerCase().includes(query.toLowerCase())
+            );
+            
+
 </script>
