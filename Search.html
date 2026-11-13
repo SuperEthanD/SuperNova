@@ -7,192 +7,9 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <div class="browser-container">
-        <!-- Top Browser Navigation Bar -->
-        <div class="toolbar">
-            <div class="nav-buttons">
-                <button id="back-btn" class="btn" title="Back">←</button>
-                <button id="forward-btn" class="btn" title="Forward">→</button>
-                <button id="reload-btn" class="btn" title="Reload">↻</button>
-            </div>
-            <div class="address-bar-container">
-                <input type="text" id="url-input" value="http://localhost:9898/SuperNova/Home.html" readonly>
-            </div>
-        </div>
-
-        <!-- Main Viewport Window -->
-        <div class="viewport">
-            
-            <!-- VIEW A: SuperNova Homepage -->
-            <div id="homepage-view" class="page-container active">
-                <div class="main-content">
-                    <!-- Split Box Logo Design -->
-                    <div class="logo-container">
-                        <span class="text-super">SUPER</span>
-                        <span class="box-nova">NOVA</span>
-                    </div>
-                    <p class="tagline">Travel the Galaxy!</p>
-                    
-                    <!-- Search Controls -->
-                    <div class="search-box">
-                        <input type="text" id="search-input" placeholder="Search Anything...">
-                        <button id="go-btn">Go!</button>
-                    </div>
-                </div>
-
-                <!-- Bottom Right Utility Cluster -->
-                <div class="footer-buttons">
-                    <button class="footer-btn">Add your Website</button>
-                    <button class="footer-btn">About</button>
-                    <button class="footer-btn">Settings</button>
-                </div>
-            </div>
-
-            <!-- VIEW B: Dynamic Search Results Page -->
-            <div id="results-view" class="page-container">
-                <div class="results-header">
-                    <div class="results-logo" id="logo-return">
-                        <span class="text-super-sm">SUPER</span><span class="box-nova-sm">NOVA</span>
-                    </div>
-                    <div class="results-search-box">
-                        <input type="text" id="results-search-input">
-                        <button id="results-go-btn">Search</button>
-                    </div>
-                </div>
-
-                <!-- Media Navigation Bar Verticals -->
-                <div class="media-nav-bar">
-                    <button class="media-tab active" data-media="web">Web</button>
-                    <button class="media-tab" data-media="images">Images</button>
-                    <button class="media-tab" data-media="videos">Videos</button>
-                </div>
-                
-                <!-- Results Content Stream -->
-                <div class="results-body">
-                    <div class="search-filter-tabs">
-                        <button id="filter-all-btn" class="filter-tab active">All Results</button>
-                        <button id="filter-human-btn" class="filter-tab">👤 Human Only (Indie Web)</button>
-                    </div>
-                    
-                    <p class="search-summary">Showing results for: <span id="query-highlight"></span></p>
-                    
-                    <!-- Simulated Ad Banner (Toggled by Settings) -->
-                    <div id="simulated-ad" class="slop-ad-banner">
-                        <span>SPONSORED SLOP: Get Rich Quick With AI-Generated Digital Art Shoes!</span>
-                    </div>
-
-                    <div id="results-list"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL POPUP LAYER COLLECTION -->
-    
-    <!-- Modal 1: Add Your Website -->
-    <div id="modal-add" class="modal-overlay">
-        <div class="modal-card">
-            <button class="modal-close">&times;</button>
-            <h2>Add Your Website</h2>
-            <p>Submit your destination into the live memory matrix index loop.</p>
-            <div class="modal-form">
-                <input type="text" id="form-title" placeholder="Website Name / Title">
-                <input type="url" id="form-url" placeholder="https://yourlink.com">
-                <input type="text" id="form-snippet" placeholder="Brief Description / Snippet">
-                <button id="form-submit-btn">Index Destination</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal 2: About -->
-    <div id="modal-about" class="modal-overlay">
-        <div class="modal-card">
-            <button class="modal-close">&times;</button>
-            <h2>About SuperNova</h2>
-            <div class="modal-scroll-content">
-                <p><strong>SuperNova Anti-Slop Browser v2.0.0</strong></p>
-                <p>A specialized, human-curated sandbox web explorer running natively via system variable tokens.</p>
-                <p>Engineered to bypass structural platform tracking, corporate spam indices, and machine noise.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal 3: Settings with Accessibility and Aesthetics Sections -->
-    <div id="modal-settings" class="modal-overlay">
-        <div class="modal-card wide-card structural-card">
-            <h2>Browser Configuration</h2>
-            
-            <div class="settings-tabs">
-                <button class="tab-btn active" data-tab="tab-core">Core</button>
-                <button class="tab-btn" data-tab="tab-aesthetics">Aesthetics</button>
-                <button class="tab-btn" data-tab="tab-accessibility">Accessibility</button>
-            </div>
-
-            <div class="modal-scroll-body">
-                <!-- Tab: Core -->
-                <div id="tab-core" class="tab-content active">
-                    <div class="setting-item">
-                        <label>Activate Smart Ad-Blocker Core</label>
-                        <input type="checkbox" id="adblock-toggle" checked>
-                    </div>
-                    <div class="setting-item">
-                        <label>Persistent Session Index Tracking</label>
-                        <input type="checkbox" checked>
-                    </div>
-                </div>
-
-                <!-- Tab: Aesthetics -->
-                <div id="tab-aesthetics" class="tab-content">
-                    <div class="setting-item">
-                        <label>Galactic Theme Accent</label>
-                        <select id="theme-selector">
-                            <option value="blue">Deep Quantum Blue (Default)</option>
-                            <option value="purple">Nebula Purple</option>
-                            <option value="orange">Solar Flare Orange</option>
-                            <option value="aero">Frutiger Aero (Glossy Aurora)</option>
-                            <option value="metro">Frutiger Metro (Cyan Scenecore)</option>
-                            <option value="frutevil">Frutevil Aero (Dystopian Fire)</option>
-                            <option value="cyberpunk">Cyberpunk (Synthwave Grid)</option>
-                            <option value="vaporwave">Vaporwave (Classical Dreamscape)</option>
-                            <option value="synthwave">Synthwave (80s Sunset Palms)</option>
-                            <option value="wacky">Wacky Pomo (90s Cartoon Splat)</option>
-                            <option value="y2k">Y2K (Cyber Chromism)</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Tab: Accessibility -->
-                <div id="tab-accessibility" class="tab-content">
-                    <div class="setting-item">
-                        <label>Interface Font Scaling</label>
-                        <select id="font-scale-selector">
-                            <option value="100%">Normal (Default)</option>
-                            <option value="115%">Large (115%)</option>
-                            <option value="130%">Extra Large (130%)</option>
-                        </select>
-                    </div>
-                    <div class="setting-item">
-                        <label>High Contrast Filter Mode</label>
-                        <input type="checkbox" id="high-contrast-toggle">
-                    </div>
-                </div>
-            </div>
-
-            <!-- Fixed Footer Actions -->
-            <div class="modal-fixed-footer">
-                <p class="setting-note">Memory writes to localStorage profile variables.</p>
-                <button class="save-close-action-btn">Save & Close</button>
-            </div>
-        </div>
-    </div>
-
-</body>
-</html>
-
-
-<style>
- * {
+	
+	<style>
+	* {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -454,11 +271,190 @@ body, html {
 .save-close-action-btn { background-color: #10b981; color: #ffffff; border: none; padding: 8px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; }
 .save-close-action-btn:hover { background-color: #059669; }
 
-</style>
+	</style>
 
-<script>
+    <div class="browser-container">
+        <!-- Top Browser Navigation Bar -->
+        <div class="toolbar">
+            <div class="nav-buttons">
+                <button id="back-btn" class="btn" title="Back">←</button>
+                <button id="forward-btn" class="btn" title="Forward">→</button>
+                <button id="reload-btn" class="btn" title="Reload">↻</button>
+            </div>
+            <div class="address-bar-container">
+                <input type="text" id="url-input" value="http://localhost:9898/SuperNova/Home.html" readonly>
+            </div>
+        </div>
+
+        <!-- Main Viewport Window -->
+        <div class="viewport">
+            
+            <!-- VIEW A: SuperNova Homepage -->
+            <div id="homepage-view" class="page-container active">
+                <div class="main-content">
+                    <!-- Split Box Logo Design -->
+                    <div class="logo-container">
+                        <span class="text-super">SUPER</span>
+                        <span class="box-nova">NOVA</span>
+                    </div>
+                    <p class="tagline">Travel the Galaxy!</p>
+                    
+                    <!-- Search Controls -->
+                    <div class="search-box">
+                        <input type="text" id="search-input" placeholder="Search Anything...">
+                        <button id="go-btn">Go!</button>
+                    </div>
+                </div>
+
+                <!-- Bottom Right Utility Cluster -->
+                <div class="footer-buttons">
+                    <button class="footer-btn">Add your Website</button>
+                    <button class="footer-btn">About</button>
+                    <button class="footer-btn">Settings</button>
+                </div>
+            </div>
+
+            <!-- VIEW B: Dynamic Search Results Page -->
+            <div id="results-view" class="page-container">
+                <div class="results-header">
+                    <div class="results-logo" id="logo-return">
+                        <span class="text-super-sm">SUPER</span><span class="box-nova-sm">NOVA</span>
+                    </div>
+                    <div class="results-search-box">
+                        <input type="text" id="results-search-input">
+                        <button id="results-go-btn">Search</button>
+                    </div>
+                </div>
+
+                <!-- Media Navigation Bar Verticals -->
+                <div class="media-nav-bar">
+                    <button class="media-tab active" data-media="web">Web</button>
+                    <button class="media-tab" data-media="images">Images</button>
+                    <button class="media-tab" data-media="videos">Videos</button>
+                </div>
+                
+                <!-- Results Content Stream -->
+                <div class="results-body">
+                    <div class="search-filter-tabs">
+                        <button id="filter-all-btn" class="filter-tab active">All Results</button>
+                        <button id="filter-human-btn" class="filter-tab">👤 Human Only (Indie Web)</button>
+                    </div>
+                    
+                    <p class="search-summary">Showing results for: <span id="query-highlight"></span></p>
+                    
+                    <!-- Simulated Ad Banner (Toggled by Settings) -->
+                    <div id="simulated-ad" class="slop-ad-banner">
+                        <span>SPONSORED SLOP: Get Rich Quick With AI-Generated Digital Art Shoes!</span>
+                    </div>
+
+                    <div id="results-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL POPUP LAYER COLLECTION -->
+    
+    <!-- Modal 1: Add Your Website -->
+    <div id="modal-add" class="modal-overlay">
+        <div class="modal-card">
+            <button class="modal-close">&times;</button>
+            <h2>Add Your Website</h2>
+            <p>Submit your destination into the live memory matrix index loop.</p>
+            <div class="modal-form">
+                <input type="text" id="form-title" placeholder="Website Name / Title">
+                <input type="url" id="form-url" placeholder="https://yourlink.com">
+                <input type="text" id="form-snippet" placeholder="Brief Description / Snippet">
+                <button id="form-submit-btn">Index Destination</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2: About -->
+    <div id="modal-about" class="modal-overlay">
+        <div class="modal-card">
+            <button class="modal-close">&times;</button>
+            <h2>About SuperNova</h2>
+            <div class="modal-scroll-content">
+                <p><strong>SuperNova Anti-Slop Browser v2.0.0</strong></p>
+                <p>A specialized, human-curated sandbox web explorer running natively via system variable tokens.</p>
+                <p>Engineered to bypass structural platform tracking, corporate spam indices, and machine noise.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 3: Settings with Accessibility and Aesthetics Sections -->
+    <div id="modal-settings" class="modal-overlay">
+        <div class="modal-card wide-card structural-card">
+            <h2>Browser Configuration</h2>
+            
+            <div class="settings-tabs">
+                <button class="tab-btn active" data-tab="tab-core">Core</button>
+                <button class="tab-btn" data-tab="tab-aesthetics">Aesthetics</button>
+                <button class="tab-btn" data-tab="tab-accessibility">Accessibility</button>
+            </div>
+
+            <div class="modal-scroll-body">
+                <!-- Tab: Core -->
+                <div id="tab-core" class="tab-content active">
+                    <div class="setting-item">
+                        <label>Activate Smart Ad-Blocker Core</label>
+                        <input type="checkbox" id="adblock-toggle" checked>
+                    </div>
+                    <div class="setting-item">
+                        <label>Persistent Session Index Tracking</label>
+                        <input type="checkbox" checked>
+                    </div>
+                </div>
+
+                <!-- Tab: Aesthetics -->
+                <div id="tab-aesthetics" class="tab-content">
+                    <div class="setting-item">
+                        <label>Galactic Theme Accent</label>
+                        <select id="theme-selector">
+                            <option value="blue">Deep Quantum Blue (Default)</option>
+                            <option value="purple">Nebula Purple</option>
+                            <option value="orange">Solar Flare Orange</option>
+                            <option value="aero">Frutiger Aero (Glossy Aurora)</option>
+                            <option value="metro">Frutiger Metro (Cyan Scenecore)</option>
+                            <option value="frutevil">Frutevil Aero (Dystopian Fire)</option>
+                            <option value="cyberpunk">Cyberpunk (Synthwave Grid)</option>
+                            <option value="vaporwave">Vaporwave (Classical Dreamscape)</option>
+                            <option value="synthwave">Synthwave (80s Sunset Palms)</option>
+                            <option value="wacky">Wacky Pomo (90s Cartoon Splat)</option>
+                            <option value="y2k">Y2K (Cyber Chromism)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Tab: Accessibility -->
+                <div id="tab-accessibility" class="tab-content">
+                    <div class="setting-item">
+                        <label>Interface Font Scaling</label>
+                        <select id="font-scale-selector">
+                            <option value="100%">Normal (Default)</option>
+                            <option value="115%">Large (115%)</option>
+                            <option value="130%">Extra Large (130%)</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label>High Contrast Filter Mode</label>
+                        <input type="checkbox" id="high-contrast-toggle">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fixed Footer Actions -->
+            <div class="modal-fixed-footer">
+                <p class="setting-note">Memory writes to localStorage profile variables.</p>
+                <button class="save-close-action-btn">Save & Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
 document.addEventListener('DOMContentLoaded', () => {
-    // --- 1. CORE ELEMENT BINDINGS ---
+    // Dynamic Frame Binding Tokens
     const homepageView = document.getElementById('homepage-view');
     const resultsView = document.getElementById('results-view');
     const searchInput = document.getElementById('search-input');
@@ -471,7 +467,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const backBtn = document.getElementById('back-btn');
     const logoReturn = document.getElementById('logo-return');
 
-    // --- 2. CONFIGURATION & ACCESSABILITY SETTINGS ---
+    // UI Configuration Elements
     const themeSelector = document.getElementById('theme-selector');
     const logoContainer = document.querySelector('.logo-container');
     const adBlockToggle = document.getElementById('adblock-toggle');
@@ -484,19 +480,19 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentMediaMode = 'web';
     let currentFilterMode = 'all';
 
-    // --- 3. MOCK INDEX DATABASE ---
+    // Index Database holding real human records and media references
     const mockDatabase = [
         { 
             title: "The Angry English Guy – Nostalgia & Digital Culture Blog", 
             url: "https://theangryenglishguy.blog", 
-            snippet: "Welcome to the central platform of Ethan D (The Angry English Guy). Exploring media compilations, 2009 Cartoon Network montages, and vintage E4 British TV ident histories.",
+            snippet: "Exploring media compilations, 2009 Cartoon Network montages, and vintage E4 British TV ident histories.",
             isHuman: true,
             images: ["https://picsum.photos", "https://picsum.photos"]
         },
         { 
             title: "BingeBrowse — Your Streaming Services as a 3D Video Store", 
             url: "https://bingebrowse.net", 
-            snippet: "Step inside an interactive 3D rental store environment using WebGL. Seamlessly browse movies, sync watchlists, and organize your streaming catalogs.",
+            snippet: "Step inside an interactive 3D rental store environment using WebGL. Organize your streaming catalogs.",
             isHuman: true,
             images: ["https://picsum.photos", "https://picsum.photos"]
         },
@@ -509,16 +505,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     ];
 
-    // --- 4. PERSISTENT STORAGE APPLICATION THEME ENGINE ---
+    // === PERSISTENT STORAGE INITIALIZATION MODULE ===
     const savedTheme = localStorage.getItem('supernova_theme') || 'blue';
-    if (themeSelector) {
-        themeSelector.value = savedTheme;
-    }
+    themeSelector.value = savedTheme;
 
     function applyThemeEngine(themeName) {
-        if (!homepageView || !goBtn || !logoContainer) return;
-
-        // Reset elements back to clean default blue tokens
+        // Reset element defaults before appending style profiles
         homepageView.style.background = 'radial-gradient(circle at center, #0c2b5e 0%, #030e21 100%)';
         homepageView.style.backgroundImage = 'none';
         homepageView.style.fontFamily = 'sans-serif';
@@ -533,13 +525,8 @@ document.addEventListener('DOMContentLoaded', () => {
         goBtn.style.color = '#ffffff';
         
         const searchBox = document.querySelector('.search-box');
-        if (searchBox) { 
-            searchBox.style.borderRadius = '6px'; 
-            searchBox.style.border = 'none'; 
-            searchBox.style.boxShadow = '0 4px 14px rgba(0,0,0,0.4)'; 
-        }
+        if (searchBox) { searchBox.style.borderRadius = '6px'; searchBox.style.border = 'none'; searchBox.style.boxShadow = '0 4px 14px rgba(0,0,0,0.4)'; }
 
-        // Apply aesthetic variation profiles
         if (themeName === 'purple') {
             homepageView.style.background = 'radial-gradient(circle at center, #3c096c 0%, #10002b 100%)';
             goBtn.style.backgroundColor = '#7b2cbf';
@@ -547,27 +534,32 @@ document.addEventListener('DOMContentLoaded', () => {
             homepageView.style.background = 'radial-gradient(circle at center, #d94e14 0%, #2b0c00 100%)';
             goBtn.style.backgroundColor = '#ff6b35';
         } else if (themeName === 'aero') {
+            // Frutiger Aero Gloss System
             homepageView.style.backgroundImage = 'radial-gradient(circle at 10% 0%, rgba(255, 255, 255, 0.4) 0%, transparent 50%), linear-gradient(135deg, #25aae1 0%, #1c75bc 50%, #0054a6 100%)';
             goBtn.style.backgroundColor = 'rgba(255, 255, 255, 0.25)';
             goBtn.style.border = '1px solid rgba(255, 255, 255, 0.5)';
             goBtn.style.borderRadius = '24px';
             if (searchBox) searchBox.style.borderRadius = '24px';
         } else if (themeName === 'metro') {
+            // Frutiger Metro Cyan system
             homepageView.style.backgroundImage = 'radial-gradient(circle at 15% 80%, rgba(0, 210, 255, 0.25) 0%, transparent 50%), linear-gradient(135deg, #020205 0%, #080d1a 100%)';
             logoContainer.style.textShadow = '0 0 10px #00d2ff';
             goBtn.style.backgroundColor = '#00d2ff';
             goBtn.style.borderRadius = '0px';
         } else if (themeName === 'frutevil') {
+            // Frutiger Evil Pyro system
             homepageView.style.backgroundImage = 'radial-gradient(circle at 30% 15%, rgba(255, 255, 255, 0.7) 0%, transparent 60%), linear-gradient(180deg, #990000 0%, #150000 100%)';
             goBtn.style.backgroundColor = '#ff2a00';
             goBtn.style.borderRadius = '24px';
             logoContainer.style.fontFamily = 'Impact, sans-serif';
         } else if (themeName === 'cyberpunk') {
+            // Cyberpunk neon system
             homepageView.style.backgroundImage = 'linear-gradient(to top, rgba(255, 0, 128, 0.2) 0%, transparent 60%), linear-gradient(to bottom, #030310 0%, #0d0a2b 100%)';
             goBtn.style.backgroundColor = '#ff007f';
             goBtn.style.border = '2px solid #00ffff';
             if (searchBox) searchBox.style.border = '2px solid #00ffff';
         } else if (themeName === 'vaporwave') {
+            // Vaporwave dream system
             homepageView.style.backgroundImage = 'radial-gradient(circle at 50% 35%, #ff70a6 0%, transparent 50%), linear-gradient(180deg, #a0e7e5 0%, #ffb3c6 100%)';
             logoContainer.style.fontFamily = '"Times New Roman", Georgia, serif';
             goBtn.style.backgroundColor = '#ff70a6';
@@ -582,40 +574,39 @@ document.addEventListener('DOMContentLoaded', () => {
             goBtn.style.backgroundColor = 'rgba(255, 255, 255, 0.4)';
             goBtn.style.borderRadius = '30px';
             if (searchBox) searchBox.style.borderRadius = '30px';
+        } else {
+            homepageView.style.background = 'radial-gradient(circle at center, #0c2b5e 0%, #030e21 100%)';
         }
     }
-    
-    // Launch theme configuration immediately
-    applyThemeEngine(savedTheme);
+    applyThemeEngine(savedTheme); // Core trigger on loader loop
 
-    if (themeSelector) {
-        themeSelector.addEventListener('change', (e) => {
-            applyThemeEngine(e.target.value);
-            localStorage.setItem('supernova_theme', e.target.value);
-        });
-    }
+    // Dropdown change storage interceptor
+    themeSelector.addEventListener('change', (e) => {
+        applyThemeEngine(e.target.value);
+        localStorage.setItem('supernova_theme', e.target.value);
+    });
 
-    // --- 5. SEARCH LOGIC ENGINE (DEFENSIVE ROUTING) ---
+    // === CORE QUERY DRIVER PROCESSING LOGIC ===
     function executeSearch(query) {
-        if (!query || !query.trim() || !resultsList) return;
+        if (!query.trim()) return;
 
-        if (searchInput) searchInput.value = query;
-        if (resultsSearchInput) resultsSearchInput.value = query;
-        if (queryHighlight) queryHighlight.textContent = `"${query}"`;
-        if (urlInput) urlInput.value = `http://localhost:9898/SuperNova/Search?q=${encodeURIComponent(query)}`;
+        searchInput.value = query;
+        resultsSearchInput.value = query;
+        queryHighlight.textContent = `"${query}"`;
+        urlInput.value = `http://localhost:9898/SuperNova/Search?q=${encodeURIComponent(query)}`;
 
         resultsList.innerHTML = '';
         
-        // Handle Ad Blocker Toggle states
-        if (adElement && adBlockToggle) { 
-            adElement.style.display = adBlockToggle.checked ? 'none' : 'block'; 
-        }
+        // Sync Ad Blocker visual components
+        if (adElement) { adElement.style.display = adBlockToggle.checked ? 'none' : 'block'; }
 
+        // Fork processing matrix based on media types tabs selected
         if (currentMediaMode === 'images') {
             const grid = document.createElement('div');
             grid.className = 'image-results-grid';
+            
             let match = mockDatabase.find(i => i.title.toLowerCase().includes(query.toLowerCase())) || mockDatabase[0];
-            const imgs = (match && match.images && match.images.length) ? match.images : ["https://picsum.photos", "https://picsum.photos"];
+            const imgs = match.images.length ? match.images : ["https://picsum.photos", "https://picsum.photos"];
             
             imgs.forEach((src, idx) => {
                 const card = document.createElement('div');
@@ -632,11 +623,122 @@ document.addEventListener('DOMContentLoaded', () => {
                 resultsList.appendChild(card);
             }
         } else {
-            // Web view filtering loops
+            // Standard text Web view filters loop
             let filtered = mockDatabase.filter(item => 
                 item.title.toLowerCase().includes(query.toLowerCase()) || 
                 item.snippet.toLowerCase().includes(query.toLowerCase())
             );
-            
+			if (!filtered.length) { 
+    filtered = [ 
+        { 
+            title: `${query} Research Log`, 
+            url: `https://engine.net{query}`, 
+            snippet: `Global indices generated parameters matching your query search thread for "${query}".`, 
+            isHuman: true 
+        } 
+    ]; 
+}
 
-</script>
+filtered.forEach(item => {
+    if (currentFilterMode === 'human' && !item.isHuman) return; // Drop corporate index blocks
+    const block = document.createElement('div');
+    block.className = 'result-item';
+    block.innerHTML = `<h3><a href="#">${item.title}</a></h3><span class="result-url">${item.url}</span><p class="result-snippet">${item.snippet}</p>`;
+    resultsList.appendChild(block);
+});
+}
+
+homepageView.classList.remove('active');
+resultsView.classList.add('active');
+}
+
+// === COMPONENT ATTACHMENTS & LISTENERS ===
+goBtn.addEventListener('click', () => executeSearch(searchInput.value));
+resultsGoBtn.addEventListener('click', () => executeSearch(resultsSearchInput.value));
+searchInput.addEventListener('keypress', (e) => { if(e.key==='Enter') executeSearch(searchInput.value); });
+resultsSearchInput.addEventListener('keypress', (e) => { if(e.key==='Enter') executeSearch(resultsSearchInput.value); });
+
+function backHome() { 
+    resultsView.classList.remove('active'); 
+    homepageView.classList.add('active'); 
+    urlInput.value = "http://localhost:9898/SuperNova/Home.html"; 
+}
+backBtn.addEventListener('click', backHome);
+logoReturn.addEventListener('click', backHome);
+
+// Media Switch triggers
+document.querySelectorAll('.media-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+        document.querySelectorAll('.media-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        currentMediaMode = tab.getAttribute('data-media');
+        document.querySelector('.search-filter-tabs').style.display = (currentMediaMode === 'web') ? 'flex' : 'none';
+        executeSearch(resultsSearchInput.value);
+    });
+});
+
+// Human filtering triggers
+filterAllBtn.addEventListener('click', () => { 
+    currentFilterMode = 'all'; 
+    filterAllBtn.classList.add('active'); 
+    filterHumanBtn.classList.remove('active'); 
+    executeSearch(resultsSearchInput.value); 
+});
+
+filterHumanBtn.addEventListener('click', () => { 
+    currentFilterMode = 'human'; 
+    filterHumanBtn.classList.add('active'); 
+    filterAllBtn.classList.remove('active'); 
+    executeSearch(resultsSearchInput.value); 
+});
+
+// Configuration Sheet Modal triggers mapping loops
+const modals = { 
+    add: document.getElementById('modal-add'), 
+    about: document.getElementById('modal-about'), 
+    settings: document.getElementById('modal-settings') 
+};
+
+document.querySelectorAll('.footer-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const txt = btn.textContent.toLowerCase();
+        if (txt.includes('add')) modals.add.classList.add('open');
+        if (txt.includes('about')) modals.about.classList.add('open');
+        if (txt.includes('settings')) modals.settings.classList.add('open');
+    });
+});
+
+document.querySelectorAll('.modal-close, .save-close-action-btn').forEach(b => {
+    b.addEventListener('click', () => { 
+        b.closest('.modal-overlay').classList.remove('open'); 
+    });
+});
+
+// Configuration inner tab bindings navigation loops
+document.querySelectorAll('.tab-btn').forEach(t => {
+    t.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn, .tab-content').forEach(el => el.classList.remove('active'));
+        t.classList.add('active');
+        document.getElementById(t.getAttribute('data-tab')).classList.add('active');
+    });
+});
+
+// Form ingestion data pipeline triggers push items to array
+document.getElementById('form-submit-btn').addEventListener('click', () => {
+    const title = document.getElementById('form-title').value;
+    const url = document.getElementById('form-url').value;
+    const snip = document.getElementById('form-snippet').value;
+    if(!title || !url) return alert('Populate forms correctly.');
+    mockDatabase.unshift({ title, url, snippet: snip || "Human index data.", isHuman: true, images: [] });
+    alert('Website successfully cached into simulation index matrix loop.');
+    modals.add.classList.remove('open');
+});
+
+// Accessibility Configuration triggers
+fontScaleSelector.addEventListener('change', (e) => { document.body.style.fontSize = e.target.value; });
+contrastToggle.addEventListener('change', (e) => { document.body.style.filter = e.target.checked ? 'contrast(1.25)' : 'none'; });
+});
+
+	</script>
+</body>
+</html>
