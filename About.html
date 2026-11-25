@@ -1,93 +1,74 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width">
-<title>About SuperNova</title>
-<link rel="stylesheet" href="style.css">
-</head>
-
-
-<!-- Information about SuperNova -->
-<body>
-<font color="white">
-<h2>About SuperNova</h2>
-
-<p>----------------------------------------------------------------------</p>
-
-<p><strong>SuperNova is a fully independent user-friendly search engine that acts as an alternative to "corporate search".</strong></p>
-
-<p><strong>No Distractions, No AI, No Tracking.</strong></p>
-
-<p><strong>Just a completely user driven search engine</strong></p>
-
-<!-- Back Button -->
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<style>
-body {
-margin: 0;
-padding: 0;
-height: 100vh;
-background-color: #f4f4f4;
-font-family: sans-serif;
-
-}
-
-
-.button-container {
-position: fixed; 
-bottom: 20px;
-right: 20px;
-display: flex;
-gap: 10px;
-z-index: 1000;
-
-}
-
-
-.button-container button {
-padding: 10px 15px;
-font-size: 16px;
-border: none;
-border-radius: 5px;
-background-color: #007bff;
-color: white;
-cursor: pointer;
-transition: background-color 0.2s;
-
-}
-
-
-.button-container button:hover {
-background-color: #0056b3;
-
-}
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - SuperNova</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+<body>
+    <div class="browser-container">
+        <div class="toolbar">
+            <div class="nav-buttons">
+                <button id="back-btn" class="btn" title="Back">←</button>
+                <button id="forward-btn" class="btn" title="Forward">→</button>
+                <button id="reload-btn" class="btn" title="Reload">↻</button>
+            </div>
+            <div class="address-bar-container">
+                <input type="text" id="url-input" readonly>
+            </div>
+        </div>
+
+        <div class="viewport">
+            <div class="subpage-header">
+                <a href="Home.html" class="results-logo">
+                    <span class="text-super-sm">SUPER</span><span class="box-nova-sm">NOVA</span>
+                </a>
+                <span class="subpage-title-badge">About SuperNova</span>
+            </div>
+
+            <div class="subpage-body">
+                <div class="content-card">
+                    <h2>About SuperNova</h2>
+                    <p class="subtitle">A lightweight, space-themed web browser and search portal crafted directly on iOS.</p>
+
+                    <div class="about-section">
+                        <h3>Our Mission</h3>
+                        <p>SuperNova is designed to make exploring the web feel fast, focused, and cosmic. Combine live knowledge lookups with your own custom-indexed websites in one clean interface.</p>
+                    </div>
+
+                    <div class="about-section">
+                        <h3>How Search Works</h3>
+                        <p>When you search on SuperNova, it first scans your locally indexed websites submitted through the Developer Portal, then queries live Wikipedia articles to bring back instant answers.</p>
+                    </div>
+
+                    <div class="spec-grid">
+                        <div class="spec-box">
+                            <div class="spec-label">Version</div>
+                            <div class="spec-value">v2.0 Multi-Page</div>
+                        </div>
+                        <div class="spec-box">
+                            <div class="spec-label">Built With</div>
+                            <div class="spec-value">Koder on iOS</div>
+                        </div>
+                        <div class="spec-box">
+                            <div class="spec-label">Search Engine</div>
+                            <div class="spec-value">NovaIndex + Wiki API</div>
+                        </div>
+                        <div class="spec-box">
+                            <div class="spec-label">Storage</div>
+                            <div class="spec-value">Local Device Storage</div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <a href="Home.html" class="primary-btn">Back to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
 </html>
-
-<div class="button-container">
-<a href="Home.html">
-<button>Back</button>
-
-
-
-<!-- Background -->
-<style>
-
-body {
-
-margin: 0; 
-padding: 0;
-background-image: url('About-Page_Background.jpg');
-background-size: cover;
-background-repeat: no-repeat;
-background-position: center;
-height: 100vh;
-
-}
-
-</style>
