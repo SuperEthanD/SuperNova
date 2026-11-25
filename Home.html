@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SuperNova</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="browser-container">
+        <div class="toolbar">
+            <div class="nav-buttons">
+                <button id="back-btn" class="btn" title="Back">←</button>
+                <button id="forward-btn" class="btn" title="Forward">→</button>
+                <button id="reload-btn" class="btn" title="Reload">↻</button>
+            </div>
+            <div class="address-bar-container">
+                <input type="text" id="url-input" readonly>
+            </div>
+        </div>
+
+        <div class="viewport">
+            <div class="homepage-view">
+                <div class="main-content">
+                    <div class="logo-container">
+                        <span class="text-super">SUPER</span>
+                        <span class="box-nova">NOVA</span>
+                    </div>
+                    <p class="tagline" id="home-tagline">Travel the Galaxy!</p>
+                    
+                    <div class="search-box">
+                        <input type="text" id="search-input" placeholder="Search Anything...">
+                        <button id="go-btn">Go!</button>
+                    </div>
+                </div>
+
+                <div class="footer-buttons">
+                    <a href="Add-Website.html" class="footer-btn">Add your Website</a>
+                    <a href="About.html" class="footer-btn">About</a>
+                    <a href="Settings.html" class="footer-btn">Settings</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        const searchInput = document.getElementById('search-input');
+        const goBtn = document.getElementById('go-btn');
+
+        function launchSearch() {
+            const q = searchInput.value.trim();
+            if (q) {
+                window.location.href = `Search.html?q=${encodeURIComponent(q)}`;
+            }
+        }
+
+        goBtn.addEventListener('click', launchSearch);
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') launchSearch();
+        });
+    </script>
+</body>
+</html>
