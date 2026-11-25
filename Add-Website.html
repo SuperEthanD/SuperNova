@@ -1,173 +1,132 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width">
-<title>Add your Website</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add your Website - SuperNova</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+    <div class="browser-container">
+        <div class="toolbar">
+            <div class="nav-buttons">
+                <button id="back-btn" class="btn" title="Back">←</button>
+                <button id="forward-btn" class="btn" title="Forward">→</button>
+                <button id="reload-btn" class="btn" title="Reload">↻</button>
+            </div>
+            <div class="address-bar-container">
+                <input type="text" id="url-input" readonly>
+            </div>
+        </div>
 
-<font color="white">
-<h3>Add your Website</h3>
+        <div class="viewport">
+            <div class="subpage-header">
+                <a href="Home.html" class="results-logo">
+                    <span class="text-super-sm">SUPER</span><span class="box-nova-sm">NOVA</span>
+                </a>
+                <span class="subpage-title-badge">Developer & Creator Portal</span>
+            </div>
 
-<h2>Add your Website URL</h2>
+            <div class="subpage-body">
+                <div class="content-card">
+                    <h2>Add your Website</h2>
+                    <p class="subtitle">Submit a URL to the SuperNova search index so it appears at the top of search results.</p>
 
-<p>Enter your Website URL below, it will help us know about your Website and index it into our database.</p>
+                    <form id="add-site-form">
+                        <div class="form-group">
+                            <label for="site-title-input">Website Title *</label>
+                            <input type="text" id="site-title-input" placeholder="e.g., Galaxy Explorer" required>
+                        </div>
 
-<!-- Form of Website Submission -->
-<div class="input-group">
-<input type="url" id="websiteUrl" placeholder="https://example.com">
-<button onclick="submitWebsite()">Add Website</button>
+                        <div class="form-group">
+                            <label for="site-url-input">Website URL *</label>
+                            <input type="text" id="site-url-input" placeholder="e.g., https://example.com" required>
+                        </div>
 
-</div>
+                        <div class="form-group">
+                            <label for="site-desc-input">Description & Keywords</label>
+                            <textarea id="site-desc-input" placeholder="Briefly describe what your website is about..."></textarea>
+                        </div>
 
-<!-- Displayed Results -->
-<div class="box">
-        <h3>Search Results / Indexed Sites</h3>
-        <ul id="resultsList"></ul>
+                        <div class="form-actions">
+                            <button type="submit" class="primary-btn">Index Website</button>
+                            <a href="Home.html" class="secondary-btn">Back to Home</a>
+                        </div>
+                    </form>
+                    <div id="add-site-feedback" class="feedback-msg"></div>
+                </div>
+
+                <div class="indexed-list-container">
+                    <h3>Currently Indexed Websites (<span id="indexed-count">0</span>)</h3>
+                    <div id="indexed-sites-list"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <script src="app.js"></script>
     <script>
-        // Load existing websites from LocalStorage or use defaults if empty
-        let websiteIndex = JSON.parse(localStorage.getItem('mySearchIndex')) || [
-            { name: "Google", url: "https://google.com" },
-            { name: "Koder Editor", url: "https://www.koderapp.com" }
-        ];
+        const form = document.getElementById('add-site-form');
+        const titleInput = document.getElementById('site-title-input');
+        const urlField = document.getElementById('site-url-input');
+        const descInput = document.getElementById('site-desc-input');
+        const feedback = document.getElementById('add-site-feedback');
+        const listEl = document.getElementById('indexed-sites-list');
+        const countEl = document.getElementById('indexed-count');
 
-        // Function to display the list of sites
-        function displaySites(sitesToShow) {
-            const list = document.getElementById('resultsList');
-            list.innerHTML = ''; // Clear old results
-            
-            if(sitesToShow.length === 0) {
-                list.innerHTML = '<li>No websites found matching your search.</li>';
+        function renderSites() {
+            const sites = getCustomSites();
+            countEl.textContent = sites.length;
+
+            if (sites.length === 0) {
+                listEl.innerHTML = '<p style="color: #718096; font-size: 13px;">No custom websites indexed yet.</p>';
                 return;
             }
 
-            sitesToShow.forEach(site => {
-                const li = document.createElement('li');
-                li.innerHTML = `<a href="${site.url}" target="_blank">${site.name}</a> <br> <small>${site.url}</small>`;
-                list.appendChild(li);
+            listEl.innerHTML = sites.map((site, index) => `
+                <div class="indexed-site-card">
+                    <div class="indexed-site-info">
+                        <h4>${site.title}</h4>
+                        <span>${site.url}</span>
+                    </div>
+                    <button class="delete-site-btn" data-index="${index}">Remove</button>
+                </div>
+            `).join('');
+
+            document.querySelectorAll('.delete-site-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const idx = parseInt(e.target.getAttribute('data-index'), 10);
+                    const updated = getCustomSites();
+                    updated.splice(idx, 1);
+                    saveCustomSites(updated);
+                    renderSites();
+                });
             });
         }
 
-        // Function to search through the saved websites
-        function searchWebsites() {
-            const query = document.getElementById('searchInput').value.toLowerCase();
-            const filteredSites = websiteIndex.filter(site => 
-                site.name.toLowerCase().includes(query) || 
-                site.url.toLowerCase().includes(query)
-            );
-            displaySites(filteredSites);
-        }
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const title = titleInput.value.trim();
+            let url = urlField.value.trim();
+            const snippet = descInput.value.trim() || "Submitted via SuperNova Developer Portal.";
 
-        // Function to add a website dynamically
-        function addWebsite() {
-            const nameInput = document.getElementById('siteName');
-            const urlInput = document.getElementById('siteUrl');
+            if (!title || !url) return;
+            if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
 
-            if (!nameInput.value || !urlInput.value) {
-                alert('Please fill out both the Name and URL fields.');
-                return;
-            }
+            const sites = getCustomSites();
+            sites.unshift({ title, url, snippet });
+            saveCustomSites(sites);
 
-            // Ensure the URL starts with http:// or https://
-            let url = urlInput.value;
-            if (!/^https?:\/\//i.test(url)) {
-                url = 'https://' + url;
-            }
+            titleInput.value = '';
+            urlField.value = '';
+            descInput.value = '';
 
-            // Add the new site object to our array
-            const newSite = { name: nameInput.value, url: url };
-            websiteIndex.push(newSite);
+            feedback.textContent = `✓ "${title}" is now live in SuperNova search results!`;
+            feedback.style.display = 'block';
+            renderSites();
+        });
 
-            // Save updated array to browser storage
-            localStorage.setItem('mySearchIndex', JSON.stringify(websiteIndex));
-
-            // Clear inputs and refresh view
-            nameInput.value = '';
-            urlInput.value = '';
-            displaySites(websiteIndex);
-            alert('Website added successfully!');
-        }
-
-        // Show all indexed sites by default when the app opens
-        displaySites(websiteIndex);
+        renderSites();
     </script>
-
 </body>
 </html>
-
-</body>
-</html>
-
-
-<!-- Back Button -->
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<style>
-body {
-margin: 0;
-padding: 0;
-height: 100vh;
-background-color: #f4f4f4;
-font-family: sans-serif;
-
-}
-
-
-.button-container {
-position: fixed; 
-bottom: 20px;
-right: 20px;
-display: flex;
-gap: 10px;
-z-index: 1000;
-
-}
-
-
-.button-container button {
-padding: 10px 15px;
-font-size: 16px;
-border: none;
-border-radius: 5px;
-background-color: #007bff;
-color: white;
-cursor: pointer;
-transition: background-color 0.2s;
-
-}
-
-.button-container button:hover {
-background-color: #0056b3;
-
-}
-
-</style>
-</head>
-</html>
-
-<div class="button-container">
-<a href="Home.html">
-<button>Back</button>
-
-<!-- Background -->
-<style>
-
-body {
-
-margin: 0; 
-padding: 0;
-background-image: url('Add-Your-Website_Background.jpg');
-background-size: cover;
-background-repeat: no-repeat;
-background-position: center;
-height: 100vh;
-
-}
-
-</style>
