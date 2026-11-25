@@ -1,86 +1,109 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width-device=width">
-<title>Settings</title>
-<link rel="stylesheet" href="style.css">
-<script src="Settings.js" defer></script>
-</head>
-
-<body>
-
-<font color="white">
-<h3>Settings</h3>
-
-<!-- Feedback -->
-<h3>Feedback</h3>
-
-<!-- Send Feedback Button -->
-<a href="Feedback.html">
-<button id="feedback-btn">Send Feedback</button>
-
-<!-- Search Settings -->
-<font color="white">
-<h4>Seach Settings</h4>
-
-<a href="Search-Help.html">
-<button id="search-help-btn">Search Help</button>
-
-<a href="Search-Options.html">
-<button id="search-options-btn">Search Options</button>
-
-<!-- Back Button -->
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<style>
-body {
-margin: 0;
-padding: 0;
-height: 100vh;
-background-color: #f4f4f4;
-font-family: sans-serif;
-
-}
-
-
-.button-container {
-position: fixed;
-bottom: 20px;
-right: 20px;
-display: flex;
-gap: 10px;
-z-index: 1000;
-
-}
-
-
-.button-container button {
-padding: 15px 10px;
-font size: 16px;
-border: none;
-border-radius: 5px;
-background-color: #007bff;
-color: white;
-cursor: pointer;
-transition: background-color 0.2s;
-
-}
-
-
-.button container button:hover {
-background-color: #0056b3;
-
-}
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - SuperNova</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+<body>
+    <div class="browser-container">
+        <div class="toolbar">
+            <div class="nav-buttons">
+                <button id="back-btn" class="btn" title="Back">←</button>
+                <button id="forward-btn" class="btn" title="Forward">→</button>
+                <button id="reload-btn" class="btn" title="Reload">↻</button>
+            </div>
+            <div class="address-bar-container">
+                <input type="text" id="url-input" readonly>
+            </div>
+        </div>
+
+        <div class="viewport">
+            <div class="subpage-header">
+                <a href="Home.html" class="results-logo">
+                    <span class="text-super-sm">SUPER</span><span class="box-nova-sm">NOVA</span>
+                </a>
+                <span class="subpage-title-badge">Browser Settings</span>
+            </div>
+
+            <div class="subpage-body">
+                <div class="content-card">
+                    <h2>Settings</h2>
+                    <p class="subtitle">Customize your SuperNova homepage, search behavior, and local browser data.</p>
+
+                    <div class="form-group">
+                        <label for="setting-tagline-input">Homepage Tagline</label>
+                        <input type="text" id="setting-tagline-input">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="setting-theme-select">Galaxy Theme</label>
+                        <select id="setting-theme-select">
+                            <option value="deep-space">Deep Space Blue (Default)</option>
+                            <option value="nebula-purple">Nebula Purple</option>
+                            <option value="midnight-void">Midnight Void</option>
+                        </select>
+                    </div>
+
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <h4>External Search Results</h4>
+                            <p>Include live Wikipedia results alongside custom indexed sites</p>
+                        </div>
+                        <input type="checkbox" id="setting-wiki-toggle" style="width: 20px; height: 20px; accent-color: #0077ff;">
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" id="save-settings-btn" class="primary-btn">Save Settings</button>
+                        <a href="Home.html" class="secondary-btn">Back to Home</a>
+                    </div>
+                    <div id="settings-feedback" class="feedback-msg"></div>
+                </div>
+
+                <div class="content-card">
+                    <h2>Data & Storage</h2>
+                    <p class="subtitle">Manage websites saved in your local SuperNova search index.</p>
+                    <div class="form-actions" style="margin-top: 0;">
+                        <button type="button" id="reset-index-btn" class="danger-btn">Reset Custom Search Index</button>
+                    </div>
+                    <div id="reset-feedback" class="feedback-msg"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        const taglineInput = document.getElementById('setting-tagline-input');
+        const themeSelect = document.getElementById('setting-theme-select');
+        const wikiToggle = document.getElementById('setting-wiki-toggle');
+        const saveBtn = document.getElementById('save-settings-btn');
+        const settingsFeedback = document.getElementById('settings-feedback');
+        const resetBtn = document.getElementById('reset-index-btn');
+        const resetFeedback = document.getElementById('reset-feedback');
+
+        // Load current settings into inputs
+        const currentSettings = getSettings();
+        taglineInput.value = currentSettings.tagline;
+        themeSelect.value = currentSettings.theme;
+        wikiToggle.checked = currentSettings.useWiki;
+
+        saveBtn.addEventListener('click', () => {
+            saveSettings({
+                tagline: taglineInput.value.trim() || "Travel the Galaxy!",
+                theme: themeSelect.value,
+                useWiki: wikiToggle.checked
+            });
+            settingsFeedback.textContent = "✓ Settings saved!";
+            settingsFeedback.style.display = 'block';
+        });
+
+        resetBtn.addEventListener('click', () => {
+            saveCustomSites([...DEFAULT_SITES]);
+            resetFeedback.textContent = "✓ Custom search index has been reset to default.";
+            resetFeedback.style.display = 'block';
+        });
+    </script>
+</body>
 </html>
-
-<div class="button-container">
-<a href="Home.html">
-<button>Back</button>
-
-
-<body style="background-color: DarkBlue;">
